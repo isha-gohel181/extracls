@@ -111,7 +111,7 @@ const Login = () => {
       <div className="login-left">
         <div className="flex items-center justify-between w-full mb-8">
           <Link to="/" className="login-logo flex items-center gap-2.5">
-            <img src="/Extra_cls/logo/main_logo.png" alt="EXTRACLS" className="h-11 w-auto object-contain" />
+            <img src="/Extra_cls/logo/logo_main_2.png" alt="EXTRACLS" className="h-11 w-auto object-contain" />
           </Link>
         </div>
 

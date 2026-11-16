@@ -9,7 +9,7 @@ import TestimonialAvatar from './TestimonialAvatar'
 const SLIDES = [
   {
     image: LANDING_IMAGES.authSlide1,
-    fallback: '/Extra_cls/logo/main_logo.png',
+    fallback: '/Extra_cls/logo/logo_main_2.png',
   },
   {
     image: LANDING_IMAGES.authSlide2,
