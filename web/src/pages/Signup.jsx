@@ -194,14 +194,29 @@ const Signup = () => {
                 required
                 autoComplete="email"
               />
-              <div className="mt-2 flex items-center gap-3">
-                <button type="button" onClick={handleSendOtp} disabled={sendingOtp} className={`px-4 py-2 bg-amber-400 text-white rounded-xl font-bold font-jetbrains text-xs ${sendingOtp ? 'opacity-50 cursor-not-allowed' : ''}`}>
+              <div className="otp-controls-row">
+                <button
+                  type="button"
+                  onClick={handleSendOtp}
+                  disabled={sendingOtp}
+                  className="otp-send-btn"
+                >
                   {sendingOtp ? t('sendingOtpBtn') : (otpSent ? t('resendOtpBtn') : t('sendOtpBtn'))}
                 </button>
                 {otpSent && (
-                  <div className="flex items-center gap-2">
-                    <input value={otpCode} onChange={(e) => setOtpCode(e.target.value)} placeholder={t('enterOtpPlaceholder')} className="signup-input !p-2 !h-9 !w-40" />
-                    <button type="button" onClick={handleVerifyOtp} disabled={verifyingOtp} className={`px-3 py-2 bg-amber-400 text-white rounded-xl font-bold font-jetbrains text-xs ${verifyingOtp ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                  <div className="otp-verify-wrap">
+                    <input
+                      value={otpCode}
+                      onChange={(e) => setOtpCode(e.target.value)}
+                      placeholder={t('enterOtpPlaceholder')}
+                      className="signup-input otp-code-input"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleVerifyOtp}
+                      disabled={verifyingOtp || otpVerifiedStore}
+                      className={`otp-verify-btn ${otpVerifiedStore ? 'otp-verify-btn--verified' : ''}`}
+                    >
                       {verifyingOtp ? t('verifyingBtn') : (otpVerifiedStore ? t('verifiedBtn') : t('verifyBtn'))}
                     </button>
                   </div>
