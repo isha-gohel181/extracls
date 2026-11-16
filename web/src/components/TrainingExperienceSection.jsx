@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { TRAINING_IMAGES } from '../constants/trainingImages'
 import { useLanguage } from '../context/LanguageContext'
+import { handleLandingImageError } from '../utils/landingImageFallback'
 
 const galleryItems = [
   { key: 'seminar', src: TRAINING_IMAGES.liveSeminar, captionKey: 'trainingCaptionSeminar', className: 'md:col-span-2 md:row-span-2 min-h-[220px] md:min-h-0' },
@@ -70,6 +71,7 @@ const TrainingExperienceSection = () => {
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                     loading={index === 0 ? 'eager' : 'lazy'}
                     decoding="async"
+                    onError={handleLandingImageError}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-brand-brown/75 via-brand-brown/15 to-transparent pointer-events-none" />
                   <figcaption className="absolute bottom-0 left-0 right-0 p-4 md:p-5">

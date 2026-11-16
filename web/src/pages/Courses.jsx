@@ -416,7 +416,7 @@ const Courses = () => {
             key: checkData.razorpay.key || import.meta.env.VITE_RAZORPAY_KEY_ID,
             amount: checkData.razorpay.order?.amount || Math.round((checkData.razorpay.amount || 0) * 100),
             currency: checkData.razorpay.currency || 'INR',
-            name: '32 Pearls Dental Academy',
+            name: 'EXTRACLS',
             description: `Registration: ${activeEventModal.title}`,
             order_id: checkData.razorpay.order?.id,
             prefill: {

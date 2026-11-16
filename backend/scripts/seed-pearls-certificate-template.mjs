@@ -1,5 +1,5 @@
 /**
- * Seeds the default published course certificate template for 32 Pearls Dental Academy.
+ * Seeds the default published course certificate template for EXTRACLS.
  * Usage: node scripts/seed-pearls-certificate-template.mjs
  */
 import dotenv from 'dotenv';

@@ -5,7 +5,7 @@ import { fetchNotifications, markNotificationsRead } from '../../redux/slices/no
 import DashboardHeader from '../../components/dashboard/DashboardHeader';
 import { useLanguage } from '../../context/LanguageContext';
 
-const BRAND = '#C96A1B';
+const BRAND = '#55B8F5';
 
 const Notifications = () => {
   const dispatch = useDispatch();
@@ -55,7 +55,7 @@ const Notifications = () => {
                 {t('notifications') || 'Notifications'}
               </h1>
               <p className="text-sm text-slate-500 mt-1">
-                Updates from your courses and 32 Pearls announcements
+                Updates from your courses and EXTRACLS announcements
               </p>
             </div>
             <button

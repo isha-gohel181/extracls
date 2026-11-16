@@ -3,8 +3,8 @@
  *
  * Usage (from backend/):
  *   node scripts/reset-credentials.mjs
- *   node scripts/reset-credentials.mjs --admin-email admin@example.com --admin-password 'Admin@123'
- *   node scripts/reset-credentials.mjs --student-email student@example.com --student-password 'Student@123'
+ *   node scripts/reset-credentials.mjs --admin-email admin@extracls.in --admin-password 'Admin@123'
+ *   node scripts/reset-credentials.mjs --student-email student@extracls.in --student-password 'Student@123'
  */
 import "dotenv/config";
 import mongoose from "mongoose";
@@ -18,11 +18,15 @@ function getArg(name, fallback) {
   return args[i + 1];
 }
 
-const ADMIN_EMAIL = getArg("--admin-email", "admin@32pearlsdental.in");
+const ADMIN_EMAIL = getArg("--admin-email", "admin@extracls.in");
 const ADMIN_PASSWORD = getArg("--admin-password", "Admin@123");
-const STUDENT_EMAIL = getArg("--student-email", "student@32pearlsdental.in");
+const STUDENT_EMAIL = getArg("--student-email", "student@extracls.in");
 const STUDENT_PASSWORD = getArg("--student-password", "Student@123");
-const LEGACY_ADMIN_EMAILS = ["admin@xpertqa.in", "admin@osacademy.com"];
+const LEGACY_ADMIN_EMAILS = [
+  "admin@xpertqa.in",
+  "admin@osacademy.com",
+  "admin@32pearlsdental.in",
+];
 
 const MONGO_URI = process.env.MONGO_URI;
 if (!MONGO_URI) {
@@ -114,7 +118,7 @@ async function main() {
     email: ADMIN_EMAIL,
     password: ADMIN_PASSWORD,
     role: "admin",
-    fullName: "32 Pearls Admin",
+    fullName: "EXTRACLS Admin",
   });
   console.log(`✅ Admin ${adminResult.action}: ${adminResult.email}`);
 
@@ -122,7 +126,7 @@ async function main() {
     email: STUDENT_EMAIL,
     password: STUDENT_PASSWORD,
     role: "student",
-    fullName: "32 Pearls Student",
+    fullName: "EXTRACLS Student",
   });
   console.log(`✅ Student ${studentResult.action}: ${studentResult.email}`);
 

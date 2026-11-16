@@ -111,7 +111,7 @@ const Login = () => {
       <div className="login-left">
         <div className="flex items-center justify-between w-full mb-8">
           <Link to="/" className="login-logo flex items-center gap-2.5">
-            <img src="/dental_acadmy/dental.jpeg" alt="32 Pearls Dental Academy" className="h-11 w-auto object-contain" />
+            <img src="/Extra_cls/logo/main_logo.png" alt="EXTRACLS" className="h-11 w-auto object-contain" />
           </Link>
         </div>
 
@@ -220,7 +220,7 @@ const Login = () => {
         </div>
 
         <div className="login-footer">
-          © {new Date().getFullYear()} 32 PEARLS DENTAL ACADEMY. ALL RIGHTS RESERVED.
+          © {new Date().getFullYear()} EXTRACLS. ALL RIGHTS RESERVED.
         </div>
       </div>
 

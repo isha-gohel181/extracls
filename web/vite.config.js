@@ -1,6 +1,10 @@
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export default defineConfig({
   plugins: [
@@ -17,7 +21,8 @@ export default defineConfig({
   resolve: {
     dedupe: ['react', 'react-dom', 'react-redux'],
     alias: {
-      'socket.io-client': 'socket.io-client/dist/socket.io.js'
+      '@': path.resolve(__dirname, './src'),
+      'socket.io-client': 'socket.io-client/dist/socket.io.js',
     }
   },
   optimizeDeps: {

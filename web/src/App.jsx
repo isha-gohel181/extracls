@@ -319,7 +319,7 @@ const AppContent = () => {
       {/* 2. Main Site Content Wrapper (Perspective Ready) */}
       <div
         id="content-wrapper"
-        className={`relative min-h-screen origin-right ${isCleanPage ? 'bg-dark' : ''} opacity-0 pointer-events-none`}
+        className={`relative min-h-screen origin-right ${isCleanPage ? 'bg-dark' : ''}`}
       >
         <main>
           <SecureWrapper>

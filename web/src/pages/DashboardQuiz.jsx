@@ -291,7 +291,7 @@ const DashboardQuiz = () => {
                                 <polyline points="12 19 5 12 12 5" />
                             </svg>
                         </Link>
-                        <img src="/dental_acadmy/dental.jpeg" alt="32 Pearls Dental Academy" className="h-8 w-auto object-contain" />
+                        <img src="/Extra_cls/logo/main_logo.png" alt="EXTRACLS" className="h-8 w-auto object-contain" />
                         <div className="h-6 w-[1px] bg-slate-200" />
                         <span className="font-semibold text-slate-800 text-sm">
                             {sanitizeDisplay(quiz.quizTitle)} - Evaluation Results
@@ -648,7 +648,7 @@ const DashboardQuiz = () => {
                     </Link>
                     
                     {/* Logo */}
-                    <img src="/dental_acadmy/dental.jpeg" alt="32 Pearls Dental Academy" className="h-8 w-auto object-contain" />
+                    <img src="/Extra_cls/logo/main_logo.png" alt="EXTRACLS" className="h-8 w-auto object-contain" />
 
                     {/* Vertical divider */}
                     <div className="h-6 w-[1px] bg-slate-200" />

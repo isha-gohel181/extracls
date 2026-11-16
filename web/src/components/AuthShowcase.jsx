@@ -2,14 +2,18 @@ import { useEffect, useState } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 import './AuthShowcase.css'
 
+import { LANDING_IMAGES } from '../constants/landingImages'
+import { handleLandingImageError } from '../utils/landingImageFallback'
+import TestimonialAvatar from './TestimonialAvatar'
+
 const SLIDES = [
   {
-    image: '/dental_acadmy/login-clinic.jpg',
-    fallback: '/dental_acadmy/dental.jpeg',
+    image: LANDING_IMAGES.authSlide1,
+    fallback: '/Extra_cls/logo/main_logo.png',
   },
   {
-    image: '/dental_acadmy/login-showcase-1.jpg',
-    fallback: '/dental_acadmy/testimonials/meena-iyer.jpg',
+    image: LANDING_IMAGES.authSlide2,
+    fallback: LANDING_IMAGES.trainingWorkshop,
   },
 ]
 
@@ -48,8 +52,13 @@ const AuthShowcase = () => {
               loading={i === 0 ? 'eager' : 'lazy'}
               decoding="async"
               onError={(e) => {
-                e.currentTarget.onerror = null
-                e.currentTarget.src = s.fallback
+                const img = e.currentTarget
+                if (img.dataset.fallbackApplied === '1') {
+                  handleLandingImageError(e)
+                  return
+                }
+                img.dataset.fallbackApplied = '1'
+                img.src = s.fallback
               }}
             />
           ))}
@@ -58,12 +67,9 @@ const AuthShowcase = () => {
 
         <blockquote className="auth-showcase__quote-card">
           <div className="auth-showcase__quote-head">
-            <img
-              src="/dental_acadmy/testimonials/isha-patel.jpg"
-              alt=""
-              className="auth-showcase__avatar"
-              loading="lazy"
-              decoding="async"
+            <TestimonialAvatar
+              name={t('authShowcaseAuthor')}
+              className="auth-showcase__avatar !w-12 !h-12 !text-xs"
             />
             <div>
               <p className="auth-showcase__author">{t('authShowcaseAuthor')}</p>

@@ -1,8 +1,8 @@
-/** Real workshop photos — filenames contain spaces; use encoded URLs in src */
-const BASE = '/dental_acadmy/training'
+import { LANDING_IMAGES } from './landingImages';
 
+/** Gallery images for landing sections */
 export const TRAINING_IMAGES = {
-  liveSeminar: `${BASE}/dr%20vinod%206.jpg`,
-  mentorSession: `${BASE}/dr%20vinod%208.jpg`,
-  handsOnWorkshop: `${BASE}/dr%20vinod%2011.jpg`,
-}
+  liveSeminar: LANDING_IMAGES.trainingSeminar,
+  mentorSession: LANDING_IMAGES.trainingMentor,
+  handsOnWorkshop: LANDING_IMAGES.trainingWorkshop,
+};

@@ -200,7 +200,7 @@ const Checkout = () => {
             key: rKey,
             amount: rAmount,
             currency: razor.currency || 'INR',
-            name: '32 Pearls Dental Academy',
+            name: 'EXTRACLS',
             description: course.title || 'Course Purchase',
             order_id: order.id,
             handler: async function (response) {
@@ -240,7 +240,7 @@ const Checkout = () => {
                courseId: course._id || '',
                planId: selectedPlan.id || ''
             },
-            theme: { color: '#C96A1B' }
+            theme: { color: '#55B8F5' }
          }
 
          const rzp = new window.Razorpay(options)
@@ -446,7 +446,7 @@ const Checkout = () => {
 
                   <div className="inline-flex items-center gap-2 bg-accent/15 border border-accent/35 px-3 py-1 rounded-full backdrop-blur-md">
                      <div className="w-2 h-2 bg-accent-secondary rounded-full animate-pulse" />
-                     <span className="font-jetbrains text-[10px] text-amber-100 tracking-[0.2em] font-bold uppercase">32 Pearls Dental Academy Certified</span>
+                     <span className="font-jetbrains text-[10px] text-amber-100 tracking-[0.2em] font-bold uppercase">EXTRACLS Certified</span>
                   </div>
                </div>
 

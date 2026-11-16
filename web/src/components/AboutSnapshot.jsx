@@ -54,7 +54,7 @@ const AboutSnapshot = () => {
                <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3] bg-slate-100">
                   <img 
                      src="/hero_section.png" 
-                     alt="32 Pearls Dental Academy orthodontic training" 
+                     alt="EXTRACLS educational programs" 
                      className="w-full h-full object-cover"
                      onError={(e) => {
                         e.target.src = "https://images.unsplash.com/photo-1556761175-5973dc0f32d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80";
@@ -84,7 +84,7 @@ const AboutSnapshot = () => {
                </div>
                
                <h2 className="snapshot-text text-4xl md:text-5xl font-black text-slate-900 leading-[1.1] mb-6">
-                  About <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C96A1B] to-[#682701]">32 Pearls Dental Academy</span>
+                  About <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#55B8F5] to-[#142B5C]">EXTRACLS</span>
                </h2>
                
                <p className="snapshot-text text-lg text-slate-600 mb-8 leading-relaxed font-medium">

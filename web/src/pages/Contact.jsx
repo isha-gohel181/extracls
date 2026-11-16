@@ -4,6 +4,8 @@ import { gsap } from 'gsap';
 import { submitContactQuery, resetSupportState } from '../redux/slices/supportSlice';
 import { useLanguage } from '../context/LanguageContext';
 import {
+    APP_DISPLAY_NAME,
+    APP_TAGLINE,
     SUPPORT_EMAIL,
     SUPPORT_PHONE_TEL,
     WHATSAPP_URL,
@@ -273,14 +275,24 @@ const Contact = () => {
                                 <div className="flex justify-between items-center opacity-40">
                                     <span className="font-jetbrains text-[8px] tracking-[0.4em] uppercase text-slate-500">Official Details</span>
                                     <div className="h-[1px] w-16 bg-slate-300" />
-                                    <span className="font-jetbrains text-[8px] tracking-[0.1em] uppercase text-slate-500">32 Pearls Dental Academy</span>
+                                    <span className="font-jetbrains text-[8px] tracking-[0.1em] uppercase text-slate-500">{APP_DISPLAY_NAME}</span>
                                 </div>
 
                                 <div className="space-y-6">
                                     <div className="space-y-1">
-                                        <h3 className="font-newsreader text-2xl italic text-slate-900 font-bold">32 Pearls Dental Academy</h3>
-                                        <p className="font-jetbrains text-xs text-amber-800 font-bold uppercase tracking-wider">
-                                            Orthodontic Education &amp; Clinical Training
+                                        <h3 className="font-newsreader text-2xl italic text-slate-900 font-bold">{APP_DISPLAY_NAME}</h3>
+                                        <p className="font-jetbrains text-xs text-[#142B5C] font-bold uppercase tracking-wider">
+                                            {APP_TAGLINE}
+                                        </p>
+                                        <p className="font-jetbrains text-[11px] text-slate-600 pt-1">
+                                            Phone &amp; WhatsApp:{' '}
+                                            <a href={`tel:${SUPPORT_PHONE_TEL}`} className="font-bold text-slate-900 hover:text-accent">
+                                                {getSupportPhoneDisplay()}
+                                            </a>
+                                            {' · '}
+                                            <a href={`mailto:${SUPPORT_EMAIL}`} className="font-bold text-slate-900 hover:text-accent break-all">
+                                                {getSupportEmailDisplay()}
+                                            </a>
                                         </p>
                                     </div>
 

@@ -1,19 +1,36 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { gsap } from 'gsap'
 import sanitizeDisplay from '../utils/textSanitize'
 import { editorJsBlocks, editorJsToPlainText, isHtmlContent } from '../utils/editorContent'
 import { useLanguage } from '../context/LanguageContext'
+import { submitContactQuery, resetSupportState } from '../redux/slices/supportSlice'
 
 const BTN =
   'inline-flex items-center justify-center font-jetbrains text-[10px] font-bold tracking-[0.35em] uppercase rounded-xl px-8 md:px-10 py-3.5 transition-all duration-300'
 
+const EMPTY_FORM = { name: '', email: '', phone: '', reason: '' }
+
 const CourseHeroDetail = ({ course, section }) => {
   const heroRef = useRef(null)
+  const dispatch = useDispatch()
   const { t } = useLanguage()
+  const { user } = useSelector((state) => state.auth)
+  const { submitting, error, success } = useSelector((state) => state.support)
+
+  const [formData, setFormData] = useState({
+    name: user?.name || user?.fullName || '',
+    email: user?.email || '',
+    phone: '',
+    reason: '',
+  })
+  const [validationError, setValidationError] = useState(null)
+  const [showSuccessBanner, setShowSuccessBanner] = useState(false)
 
   const rawTitle = section?.title || course.title || ''
   const displayTitle = sanitizeDisplay(rawTitle)
   const displaySubtitle = sanitizeDisplay(section?.subtitle || course.subtitle || '')
+  const courseTitleForQuery = sanitizeDisplay(course?.title) || 'Unknown course'
 
   const sectionDescriptionBlocks = editorJsBlocks(section?.description)
   const courseDescriptionRaw = course.shortDescription || course.description || ''
@@ -22,6 +39,10 @@ const CourseHeroDetail = ({ course, section }) => {
     sectionDescriptionBlocks.length > 0
       ? sectionDescriptionBlocks.join(' ')
       : editorJsToPlainText(section?.description) || (descriptionIsHtml ? '' : courseDescriptionRaw)
+
+  useEffect(() => {
+    dispatch(resetSupportState())
+  }, [dispatch])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -39,9 +60,57 @@ const CourseHeroDetail = ({ course, section }) => {
     return () => ctx.revert()
   }, [])
 
+  useEffect(() => {
+    if (!success) return
+    setFormData(EMPTY_FORM)
+    setValidationError(null)
+    setShowSuccessBanner(true)
+    dispatch(resetSupportState())
+    const timer = window.setTimeout(() => setShowSuccessBanner(false), 8000)
+    return () => window.clearTimeout(timer)
+  }, [success, dispatch])
+
   const highlights = course.highlights?.filter(Boolean) || []
   const categoryLine = [course.category?.name, course.level?.[0]].filter(Boolean).join(' / ')
   const enrolled = Number(course.enrolledStudentsCount) || 0
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    if (validationError) setValidationError(null)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const name = formData.name.trim()
+    const email = formData.email.trim()
+    const phone = formData.phone.replace(/\D/g, '')
+    const reason = formData.reason.trim()
+
+    if (!name || !email || !phone || !reason) {
+      setValidationError('Please fill in all fields.')
+      return
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setValidationError('Please enter a valid email address.')
+      return
+    }
+    if (phone.length < 10) {
+      setValidationError('Please enter a valid 10-digit mobile number.')
+      return
+    }
+
+    setValidationError(null)
+    dispatch(
+      submitContactQuery({
+        name,
+        email,
+        phone: `+91 ${phone}`,
+        message: `[Course callback: ${courseTitleForQuery}] ${reason}`,
+        category: 'course',
+      })
+    )
+  }
 
   if (
     !displayTitle &&
@@ -55,6 +124,7 @@ const CourseHeroDetail = ({ course, section }) => {
   }
 
   const titleWords = displayTitle ? displayTitle.split(/\s+/).filter(Boolean) : []
+  const displayError = validationError || error
 
   return (
     <section
@@ -161,13 +231,29 @@ const CourseHeroDetail = ({ course, section }) => {
             </p>
           </div>
 
-          <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+          {showSuccessBanner && (
+            <div
+              className="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-center"
+              role="status"
+            >
+              <p className="font-montserrat text-sm text-emerald-800">
+                Thanks! Our team will call you soon.
+              </p>
+            </div>
+          )}
+
+          <form className="space-y-5" onSubmit={handleSubmit} noValidate>
             <label className="block space-y-1.5">
               <span className="font-jetbrains text-[9px] uppercase tracking-[0.2em] text-description/90 font-semibold">
                 {t('fullName')}
               </span>
               <input
                 type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                required
+                autoComplete="name"
                 className="w-full rounded-xl border border-card-border bg-[#FFF9F3]/50 px-4 py-3 font-montserrat text-sm text-normal placeholder:text-description/50 focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/15 transition-colors"
                 placeholder="Your name"
               />
@@ -178,6 +264,11 @@ const CourseHeroDetail = ({ course, section }) => {
               </span>
               <input
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+                autoComplete="email"
                 className="w-full rounded-xl border border-card-border bg-[#FFF9F3]/50 px-4 py-3 font-montserrat text-sm text-normal placeholder:text-description/50 focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/15 transition-colors"
                 placeholder="you@example.com"
               />
@@ -192,6 +283,12 @@ const CourseHeroDetail = ({ course, section }) => {
                 </span>
                 <input
                   type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  required
+                  autoComplete="tel-national"
+                  inputMode="numeric"
                   className="flex-1 min-w-0 px-4 py-3 font-montserrat text-sm text-normal placeholder:text-description/50 focus:outline-none bg-transparent"
                   placeholder="10-digit mobile"
                 />
@@ -202,6 +299,10 @@ const CourseHeroDetail = ({ course, section }) => {
                 Why do you want to join?
               </span>
               <textarea
+                name="reason"
+                value={formData.reason}
+                onChange={handleInputChange}
+                required
                 rows={3}
                 className="w-full rounded-xl border border-card-border bg-[#FFF9F3]/50 px-4 py-3 font-montserrat text-sm text-normal placeholder:text-description/50 focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/15 transition-colors resize-none"
                 placeholder="Tell us briefly…"
@@ -210,10 +311,17 @@ const CourseHeroDetail = ({ course, section }) => {
 
             <button
               type="submit"
-              className={`${BTN} w-full bg-accent text-dark hover:brightness-105 active:scale-[0.98] shadow-accent-soft tracking-[0.3em]`}
+              disabled={submitting}
+              className={`${BTN} w-full bg-accent text-dark hover:brightness-105 active:scale-[0.98] shadow-accent-soft tracking-[0.3em] disabled:opacity-60 disabled:cursor-not-allowed`}
             >
-              Request callback
+              {submitting ? 'Requesting…' : 'Request callback'}
             </button>
+
+            {displayError && (
+              <p className="font-jetbrains text-[10px] text-red-600 uppercase tracking-widest text-center">
+                {displayError}
+              </p>
+            )}
           </form>
         </div>
       </div>

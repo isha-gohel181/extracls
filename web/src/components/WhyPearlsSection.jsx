@@ -1,80 +1,80 @@
 import React from 'react'
 import { useLanguage } from '../context/LanguageContext'
+import { useLandingScrollReveal } from '../hooks/useLandingScrollReveal'
 
-const icons = [
-  (props) => (
-    <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-      <path d="M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z" />
-      <circle cx="12" cy="9" r="2.5" />
-    </svg>
-  ),
-  (props) => (
-    <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-      <path d="M4 19h16M6 16l3-8 4 6 3-4 2 6" />
-    </svg>
-  ),
-  (props) => (
-    <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-      <rect x="3" y="5" width="18" height="14" rx="2" />
-      <path d="M7 15l3-3 2 2 5-5" />
-    </svg>
-  ),
-  (props) => (
-    <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-    </svg>
-  ),
-  (props) => (
-    <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-      <path d="M12 3v18M3 12h18" />
-      <circle cx="12" cy="12" r="9" />
-    </svg>
-  ),
-  (props) => (
-    <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-      <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-      <circle cx="9" cy="7" r="4" />
-      <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
-    </svg>
-  ),
+const FOCUS_KEYS = [
+  { title: 'focus01Title', desc: 'focus01Desc' },
+  { title: 'focus02Title', desc: 'focus02Desc' },
+  { title: 'focus03Title', desc: 'focus03Desc' },
+  { title: 'focus04Title', desc: 'focus04Desc' },
+  { title: 'focus05Title', desc: 'focus05Desc' },
+  { title: 'focus06Title', desc: 'focus06Desc' },
 ]
 
 const WhyPearlsSection = () => {
   const { t } = useLanguage()
+  const sectionRef = useLandingScrollReveal()
 
-  const features = [
-    { title: t('focus01Title'), desc: t('focus01Desc') },
-    { title: t('focus02Title'), desc: t('focus02Desc') },
-    { title: t('focus03Title'), desc: t('focus03Desc') },
-    { title: t('focus04Title'), desc: t('focus04Desc') },
-    { title: t('focus05Title'), desc: t('focus05Desc') },
-    { title: t('focus06Title'), desc: t('focus06Desc') },
-  ]
+  const features = FOCUS_KEYS.map((keys) => ({
+    title: t(keys.title),
+    desc: t(keys.desc),
+  }))
 
   return (
-    <section className="relative bg-white py-20 md:py-28 px-4 md:px-8 lg:px-12 border-y border-card-border">
-      <div className="max-w-7xl mx-auto">
-        <div className="max-w-2xl mb-14 space-y-4">
-          <span className="font-jetbrains text-[10px] text-accent tracking-[0.5em] uppercase font-bold">
+    <section
+      ref={sectionRef}
+      className="relative bg-brand-brown py-12 md:py-16 px-4 md:px-8 lg:px-12 border-y border-white/10"
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-[#1a3a6b]/40 via-transparent to-accent/10 pointer-events-none" aria-hidden />
+
+      <div className="relative z-10 max-w-6xl mx-auto">
+        <header className="max-w-3xl mb-8 md:mb-10 space-y-3">
+          <span data-reveal className="font-jetbrains text-[10px] text-accent tracking-[0.5em] uppercase font-bold">
             {t('whyPearlsEyebrow')}
           </span>
-          <h2 className="font-newsreader italic text-3xl sm:text-4xl md:text-5xl text-normal font-light">
+          <h2
+            data-reveal
+            className="font-newsreader text-2xl sm:text-3xl md:text-4xl text-white leading-[1.12] font-light tracking-tight"
+          >
             {t('whyPearlsTitle')}
           </h2>
-          <p className="font-montserrat text-sm md:text-base text-description">{t('whyPearlsSub')}</p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-          {features.map((f, i) => {
-            const Icon = icons[i] || icons[0]
+          <p data-reveal className="font-montserrat text-sm md:text-base text-white/75 max-w-2xl">
+            {t('whyPearlsSub')}
+          </p>
+        </header>
+
+        <div className="border-t border-white/15">
+          {features.map((feature, i) => {
+            const num = String(i + 1).padStart(2, '0')
+
             return (
-              <div
-                key={f.title}
-                className="p-6 rounded-2xl bg-dark/80 border border-card-border hover:border-accent/30 transition-colors"
+              <article
+                key={feature.title}
+                data-reveal
+                className="group border-b border-white/15 py-5 md:py-6 px-2 md:px-3 -mx-2 md:-mx-3 rounded-lg transition-colors duration-300 hover:bg-white/5"
               >
-                <Icon className="w-8 h-8 text-accent mb-4" />
-                <h3 className="font-montserrat text-base font-semibold text-normal mb-2">{f.title}</h3>
-                <p className="font-montserrat text-sm text-description leading-relaxed">{f.desc}</p>
-              </div>
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-5 items-start md:items-center">
+                  <div className="md:col-span-2 flex md:block items-baseline gap-4">
+                    <p
+                      className="font-newsreader text-3xl md:text-5xl leading-none text-[#F5E6D3]/35 tabular-nums select-none shrink-0"
+                      aria-hidden
+                    >
+                      {num}
+                    </p>
+                    <h3 className="md:hidden font-newsreader text-lg text-white font-light leading-snug">
+                      {feature.title}
+                    </h3>
+                  </div>
+
+                  <h3 className="hidden md:block md:col-span-4 font-newsreader text-lg md:text-xl text-white font-light leading-snug">
+                    {feature.title}
+                  </h3>
+
+                  <p className="md:col-span-6 font-montserrat text-sm text-white/70 leading-snug md:pl-2 lg:pl-6">
+                    {feature.desc}
+                  </p>
+                </div>
+              </article>
             )
           })}
         </div>

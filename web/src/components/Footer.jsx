@@ -3,6 +3,8 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Link } from 'react-router-dom'
 import {
+  APP_DISPLAY_NAME,
+  APP_TAGLINE,
   LOGO_PATH,
   SUPPORT_EMAIL,
   ABOUT_US_FOOTER_EXCERPT,
@@ -43,7 +45,7 @@ const Footer = () => {
   return (
     <footer
       ref={footerRef}
-      className="relative w-full bg-gradient-to-b from-[#C96A1B] to-[#682701] text-white border-t border-white/15 overflow-hidden select-none"
+      className="relative w-full bg-gradient-to-b from-[#142B5C] to-[#263B63] text-white border-t border-white/15 overflow-hidden select-none"
     >
       {/* Decorative Ambient Background Soft Glows */}
       <div className="absolute inset-0 pointer-events-none opacity-25">
@@ -57,9 +59,9 @@ const Footer = () => {
           
           {/* Column 1: Brand & Bio (4 cols) */}
           <div className="footer-reveal lg:col-span-4 space-y-4">
-            <Link to="/" className="inline-block hover:opacity-90 transition-opacity" aria-label="32 Pearls Dental Academy Home">
+            <Link to="/" className="inline-block hover:opacity-90 transition-opacity" aria-label={`${APP_DISPLAY_NAME} Home`}>
               <img
-                alt="32 Pearls Dental Academy"
+                alt={APP_DISPLAY_NAME}
                 className="h-14 md:h-16 w-auto max-w-[200px] object-contain drop-shadow-[0_8px_24px_rgba(0,0,0,0.25)]"
                 src={LOGO_PATH}
               />
@@ -210,6 +212,9 @@ const Footer = () => {
             <h4 className="font-montserrat text-xs uppercase tracking-[0.2em] font-bold text-white/95">
               Contact
             </h4>
+            <p className="font-jetbrains text-[10px] text-white/70 uppercase tracking-wider">
+              {APP_DISPLAY_NAME} · {APP_TAGLINE}
+            </p>
 
             <div className="space-y-3 font-jetbrains text-xs text-white/85">
               <div className="flex items-center gap-2.5">
@@ -253,11 +258,11 @@ const Footer = () => {
         {/* Bottom Bar: Copyright and Tagline */}
         <div className="footer-reveal pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-jetbrains text-xs text-white/75">
           <p className="tracking-wide text-center sm:text-left">
-            © {new Date().getFullYear()} 32 Pearls Dental Academy. All rights reserved.
+            © {new Date().getFullYear()} {APP_DISPLAY_NAME}. All rights reserved.
           </p>
 
           <p className="text-[11px] uppercase tracking-[0.2em] text-white/60 text-center sm:text-right">
-            Professional Dental Education
+            {APP_TAGLINE}
           </p>
         </div>
       </div>

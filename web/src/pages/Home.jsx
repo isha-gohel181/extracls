@@ -2,17 +2,15 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { fetchCourses } from '../redux/slices/courseSlice'
 import Hero from '../components/Hero'
-import CourseFormatsSection from '../components/CourseFormatsSection'
-import TrainingExperienceSection from '../components/TrainingExperienceSection'
-import LandingCoursesSection from '../components/LandingCoursesSection'
+import LandingMarquee from '../components/LandingMarquee'
+import LandingAboutSection from '../components/LandingAboutSection'
 import WhyPearlsSection from '../components/WhyPearlsSection'
-import LearningPathSection from '../components/LearningPathSection'
+import LandingScrollStackSection from '../components/LandingScrollStackSection'
+import LandingCoursesSection from '../components/LandingCoursesSection'
 import MentorSection from '../components/MentorSection'
-import AlumniCasesStrip from '../components/AlumniCasesStrip'
 import TestimonialsScroll from '../components/TestimonialsScroll'
-import LandingCertificateSection from '../components/LandingCertificateSection'
-import LandingPricingTeaser from '../components/LandingPricingTeaser'
 import HomeFAQSection from '../components/HomeFAQSection'
+import LandingContactCTA from '../components/LandingContactCTA'
 
 const Home = ({ isLoaded }) => {
   const dispatch = useDispatch()
@@ -24,17 +22,15 @@ const Home = ({ isLoaded }) => {
   return (
     <div className="w-full">
       <Hero isLoaded={isLoaded} />
-      <CourseFormatsSection />
-      <TrainingExperienceSection />
+      <LandingMarquee />
+      <LandingAboutSection />
+      <LandingScrollStackSection />
       <LandingCoursesSection />
-      <WhyPearlsSection />
-      <LearningPathSection />
       <MentorSection />
-      <AlumniCasesStrip />
+      <WhyPearlsSection />
       <TestimonialsScroll variant="landing" />
-      <LandingCertificateSection />
-      <LandingPricingTeaser />
       <HomeFAQSection />
+      <LandingContactCTA />
     </div>
   )
 }

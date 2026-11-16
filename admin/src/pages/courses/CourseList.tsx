@@ -380,7 +380,7 @@ const CourseList: React.FC = () => {
             </div>
             
             <button
-              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl font-medium"
+              className="flex items-center gap-2 px-6 py-3 bg-brand-500 text-white rounded-lg hover:bg-brand-600 transition-all duration-200 shadow-md shadow-brand-500/25 hover:shadow-lg font-medium"
               onClick={() => window.location.href = "/courses/add"}
             >
               <Plus className="w-5 h-5" />

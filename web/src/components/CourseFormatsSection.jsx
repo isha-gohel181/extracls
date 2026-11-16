@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { TRAINING_IMAGES } from '../constants/trainingImages'
+import { LANDING_IMAGES } from '../constants/landingImages'
 import { useLanguage } from '../context/LanguageContext'
+import { handleLandingImageError } from '../utils/landingImageFallback'
 
 const FormatCard = ({ title, desc, imageSrc, imageAlt, ctaLabel }) => (
   <div className="group relative flex flex-col h-full bg-white border border-card-border rounded-2xl overflow-hidden shadow-sm hover:border-accent/35 hover:shadow-lg transition-all duration-300">
@@ -12,6 +13,7 @@ const FormatCard = ({ title, desc, imageSrc, imageAlt, ctaLabel }) => (
         className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
         loading="lazy"
         decoding="async"
+        onError={handleLandingImageError}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none" />
     </div>
@@ -36,19 +38,19 @@ const CourseFormatsSection = () => {
     {
       title: t('formatLiveTitle'),
       desc: t('formatLiveDesc'),
-      imageSrc: TRAINING_IMAGES.liveSeminar,
+      imageSrc: LANDING_IMAGES.formatLive,
       imageAlt: t('trainingCaptionSeminar'),
     },
     {
       title: t('formatRecordedTitle'),
       desc: t('formatRecordedDesc'),
-      imageSrc: TRAINING_IMAGES.mentorSession,
+      imageSrc: LANDING_IMAGES.formatRecorded,
       imageAlt: t('trainingCaptionMentor'),
     },
     {
       title: t('formatOfflineTitle'),
       desc: t('formatOfflineDesc'),
-      imageSrc: TRAINING_IMAGES.handsOnWorkshop,
+      imageSrc: LANDING_IMAGES.formatOffline,
       imageAlt: t('trainingCaptionWorkshop'),
     },
   ]

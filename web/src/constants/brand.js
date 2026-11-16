@@ -1,46 +1,59 @@
 /** Product branding — keep in sync with backend utils/appBrand.js and admin constants/brand.ts */
 
-export const APP_DISPLAY_NAME = '32 Pearls Dental Academy';
-export const APP_SHORT_NAME = '32 Pearls';
-export const APP_TAGLINE = 'Professional Dental Education & Training';
-export const CERTIFICATE_ORGANIZATION_DEFAULT = '32 Pearls Dental Academy';
-export const LOGO_PATH = '/dental_acadmy/dental.jpeg';
-/** Faculty photo — add file at web/public/dental_acadmy/mentor.jpg */
-export const MENTOR_IMAGE_PATH = '/dental_acadmy/mentor.jpg';
+export const APP_DISPLAY_NAME = 'EXTRACLS';
+export const APP_SHORT_NAME = 'EXTRACLS';
+export const APP_TAGLINE = 'Extra for Excellence.';
+export const CERTIFICATE_ORGANIZATION_DEFAULT = 'EXTRACLS';
+export const LOGO_PATH = '/Extra_cls/logo/main_logo.png';
+export const LOGO_COMPACT_PATH = '/Extra_cls/logo/logo.png';
+export const MENTOR_IMAGE_PATH = '/Extra_cls/landing/training-guidance.jpg';
 /** Default course certificate artwork (full design — overlays add name, course, date, serial) */
-export const CERTIFICATE_DEFAULT_IMAGE = '/dental_acadmy/certificate.png';
+export const CERTIFICATE_DEFAULT_IMAGE = '/Extra_cls/logo/main_logo.png';
 
-export const MENTOR_NAME = 'Dr. Kataria';
-export const MENTOR_TITLE = 'Program Director & Orthodontic Mentor';
+export const MENTOR_NAME = 'Our Educators';
+export const MENTOR_TITLE = 'Experienced Educators & Subject Experts';
 export const MENTOR_CREDENTIALS = [
-  'Clinical orthodontics & aligner therapy',
-  'Hands-on mechanics and case finishing',
-  'Mentor-led treatment planning reviews',
+  'Engaging lessons for young learners',
+  'High-quality study materials',
+  'Curiosity, creativity, and discovery',
 ];
 export const MENTOR_STORY = [
-  'Programs at 32 Pearls Dental Academy are built around live demonstrations, supervised practice, and structured case reviews—so you build clinical judgment alongside technique.',
-  'From your first records to finishing mechanics, mentorship focuses on anticipating challenges, revising plans, and communicating clearly with patients.',
+  'Programs at EXTRACLS are designed by experienced educators to make learning simple, interesting, and effective.',
+  'From building strong foundations to exploring new ideas, we support every child’s learning journey with care and quality.',
 ];
 
-export const DEFAULT_SUPPORT_EMAIL = '32pearlsdentalacademy@gmail.com';
-export const SUPPORT_EMAIL =
-  import.meta.env.VITE_SUPPORT_EMAIL || DEFAULT_SUPPORT_EMAIL;
+export const DEFAULT_SUPPORT_EMAIL = 'services.extracls@gmail.com';
+
+const LEGACY_SUPPORT_EMAILS = new Set([
+  '32pearlsdentalacademy@gmail.com',
+  '32pearlsdental@gmail.com',
+]);
+
+export const SUPPORT_EMAIL = (() => {
+  const fromEnv = (import.meta.env.VITE_SUPPORT_EMAIL || '').trim().toLowerCase();
+  if (fromEnv && !LEGACY_SUPPORT_EMAILS.has(fromEnv)) {
+    return import.meta.env.VITE_SUPPORT_EMAIL.trim();
+  }
+  return DEFAULT_SUPPORT_EMAIL;
+})();
 
 /** E.164 without + for wa.me / tel */
-export const SUPPORT_PHONE_E164 = '918288008777';
+export const SUPPORT_PHONE_E164 = '917602501527';
 export const SUPPORT_PHONE_TEL = `+${SUPPORT_PHONE_E164}`;
 export const WHATSAPP_URL = `https://wa.me/${SUPPORT_PHONE_E164}`;
 
 export const ABOUT_US_PARAGRAPH =
-  '32 Pearls Dental Academy is dedicated to advancing orthodontic education through practical, clinically oriented training. We empower dental practitioners to confidently diagnose, plan, and manage orthodontic cases, from basic tooth alignment to advanced treatment mechanics. With expert mentorship, hands-on training, real-case discussions, and continuous clinical guidance, we bridge the gap between theoretical knowledge and successful orthodontic practice.';
+  'Welcome to Extracls, where little minds grow and learning becomes joyful! We offer engaging educational courses and high-quality study materials for preschool and primary school children. Designed by experienced educators and subject experts, our resources make learning simple, interesting, and effective. Beyond the school curriculum, we encourage curiosity, creativity, and a love for discovery. From building strong foundations to exploring new ideas, Extracls supports every child’s learning journey with care and quality.';
 
 export const ABOUT_US_FOOTER_EXCERPT =
-  'Practical, clinically oriented orthodontic training for dental practitioners—diagnosis, treatment planning, hands-on mechanics, and mentor-led case discussions.';
+  'Engaging educational courses and quality study materials for preschool and primary school children—Extra for Excellence.';
+
+export const MISSION_STATEMENT = 'To help every learner go the EXTRA mile.';
 
 export function getSupportEmailDisplay() {
   return SUPPORT_EMAIL || DEFAULT_SUPPORT_EMAIL;
 }
 
 export function getSupportPhoneDisplay() {
-  return '+91 82880 08777';
+  return '7602501527';
 }
