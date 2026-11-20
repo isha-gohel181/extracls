@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useLanguage } from '../context/LanguageContext'
 import './AuthShowcase.css'
 
+import { LOGO_PATH } from '../constants/brand'
 import { LANDING_IMAGES } from '../constants/landingImages'
 import { handleLandingImageError } from '../utils/landingImageFallback'
 import TestimonialAvatar from './TestimonialAvatar'
@@ -9,7 +10,7 @@ import TestimonialAvatar from './TestimonialAvatar'
 const SLIDES = [
   {
     image: LANDING_IMAGES.authSlide1,
-    fallback: '/Extra_cls/logo/logo_main_2.png',
+    fallback: LOGO_PATH,
   },
   {
     image: LANDING_IMAGES.authSlide2,

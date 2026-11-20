@@ -412,6 +412,7 @@ const EditCourse = () => {
     isSubscription: false,
     isPrivate: false,
     isFeatured: false,
+    showFreeDownloadOnLanding: false,
     enableWaitlist: false,
     coursePosition: "",
     // Mentor fields
@@ -629,6 +630,7 @@ const EditCourse = () => {
         isSubscription: course.isSubscription || false,
         isPrivate: course.isPrivate || false,
         isFeatured: course.isFeatured || false,
+        showFreeDownloadOnLanding: course.showFreeDownloadOnLanding || false,
         enableWaitlist: course.enableWaitlist || false,
         coursePosition: course.coursePosition || "",
         // Mentor fields
@@ -1836,6 +1838,21 @@ const EditCourse = () => {
                           Featured Course
                         </span>
                       </label>
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          name="showFreeDownloadOnLanding"
+                          checked={formData.showFreeDownloadOnLanding}
+                          onChange={handleInputChange}
+                          className="w-4 h-4 text-emerald-600 border-gray-300 dark:border-gray-600 rounded focus:ring-emerald-500"
+                        />
+                        <span className="text-sm text-gray-700 dark:text-gray-200">
+                          Show free download on landing
+                        </span>
+                      </label>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 col-span-full">
+                        Enable &quot;Allow download&quot; and add downloadable files so materials work on the course page.
+                      </p>
                       <label className="flex items-center gap-2">
                         <input
                           type="checkbox"

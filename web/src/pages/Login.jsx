@@ -6,6 +6,7 @@ import { useGoogleLogin } from '@react-oauth/google'
 import { useLanguage } from '../context/LanguageContext'
 
 import AuthShowcase from '../components/AuthShowcase'
+import SiteBrandLogo from '../components/SiteBrandLogo'
 import './Login.css'
 
 const Login = () => {
@@ -111,7 +112,7 @@ const Login = () => {
       <div className="login-left">
         <div className="flex items-center justify-between w-full mb-8">
           <Link to="/" className="login-logo flex items-center gap-2.5">
-            <img src="/Extra_cls/logo/logo_main_2.png" alt="EXTRACLS" className="h-11 w-auto object-contain" />
+            <SiteBrandLogo size="auth" />
           </Link>
         </div>
 

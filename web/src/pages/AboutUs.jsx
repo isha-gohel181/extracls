@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
-import { APP_DISPLAY_NAME, APP_TAGLINE, LOGO_PATH, MISSION_STATEMENT } from '../constants/brand';
+import SiteBrandLogo from '../components/SiteBrandLogo';
+import { APP_DISPLAY_NAME, APP_TAGLINE, MISSION_STATEMENT } from '../constants/brand';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,7 +50,7 @@ const AboutUs = () => {
         <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#E5F2FF] rounded-full blur-[120px] -z-10" />
 
         <div className="hero-animate mb-8">
-          <img src={LOGO_PATH} alt={APP_DISPLAY_NAME} className="h-20 md:h-24 w-auto mx-auto object-contain" />
+          <SiteBrandLogo size="lg" className="mx-auto" />
         </div>
 
         <div className="hero-animate inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F0F7FF] text-[#142B5C] text-xs font-bold uppercase tracking-wider mb-8 border border-[#E2EAF3]">

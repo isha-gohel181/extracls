@@ -158,6 +158,7 @@ const courseSchema = new mongoose.Schema({
 
   // Featured flag for highlighting courses in UI
   isFeatured: { type: Boolean, default: false },
+  showFreeDownloadOnLanding: { type: Boolean, default: false },
 
   // Drip setting: users for whom drip is disabled
   dripSettingDisabledFor: [{ type: Schema.Types.ObjectId, ref: 'User', default: [] }],

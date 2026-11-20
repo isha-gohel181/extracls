@@ -5,9 +5,41 @@ import FreeQuizSubmission from '../models/FreeQuizSubmission.js';
 
 const freeContentService = new FreeContentService();
 
+function parseBool(val) {
+  if (val === undefined || val === null) return undefined;
+  if (typeof val === 'boolean') return val;
+  return val === 'true' || val === '1' || val === true;
+}
+
+function normalizeLandingFields(data) {
+  if (data.showOnLandingCarousel !== undefined) {
+    data.showOnLandingCarousel = parseBool(data.showOnLandingCarousel);
+  }
+  if (data.isActive !== undefined) {
+    data.isActive = parseBool(data.isActive);
+  }
+  if (data.isDownloadable !== undefined) {
+    data.isDownloadable = parseBool(data.isDownloadable);
+  }
+  if (data.landingSortOrder !== undefined && data.landingSortOrder !== '') {
+    data.landingSortOrder = Number(data.landingSortOrder) || 0;
+  }
+  return data;
+}
+
+export const getLandingCarousel = async (req, res) => {
+  try {
+    const limit = Math.min(parseInt(req.query.limit, 10) || 12, 24);
+    const data = await freeContentService.getLandingCarousel(limit);
+    res.status(200).json({ success: true, data });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
 export const createFreeContent = async (req, res) => {
   try {
-    const data = { ...req.body };
+    const data = normalizeLandingFields({ ...req.body });
     if (req.files) {
       if (req.files.thumbnail && req.files.thumbnail[0]) {
         let normalizedPath = req.files.thumbnail[0].path.replace(/\\/g, "/");
@@ -54,7 +86,12 @@ export const getAllFreeContent = async (req, res) => {
 
     const filters = {};
     if (contentType) filters.contentType = contentType;
-    if (isActive !== undefined) filters.isActive = isActive === 'true';
+    const isAdmin = req.user?.role === 'admin';
+    if (isActive !== undefined) {
+      filters.isActive = isActive === 'true';
+    } else if (!isAdmin) {
+      filters.isActive = true;
+    }
 
     const options = {
       page: parseInt(page),
@@ -84,7 +121,7 @@ export const getFreeContentById = async (req, res) => {
 
 export const updateFreeContent = async (req, res) => {
   try {
-    const data = { ...req.body };
+    const data = normalizeLandingFields({ ...req.body });
     if (req.files) {
       if (req.files.thumbnail && req.files.thumbnail[0]) {
         let normalizedPath = req.files.thumbnail[0].path.replace(/\\/g, "/");

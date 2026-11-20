@@ -68,7 +68,7 @@ export default function FreeContentList() {
               </select>
             )}
             <Link
-              to="/free-content/add"
+              to="/content/free/add"
               className="flex items-center gap-2 rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600"
             >
               <PlusIcon />
@@ -108,7 +108,7 @@ export default function FreeContentList() {
                     </td>
                     <td className="px-6 py-4 text-right">
                       <button
-                        onClick={() => navigate(`/free-content/edit/${item._id}`)}
+                        onClick={() => navigate(`/content/free/edit/${item._id}`)}
                         className="text-brand-500 hover:underline mr-4"
                       >
                         Edit

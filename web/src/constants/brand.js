@@ -4,11 +4,16 @@ export const APP_DISPLAY_NAME = 'EXTRACLS';
 export const APP_SHORT_NAME = 'EXTRACLS';
 export const APP_TAGLINE = 'Extra for Excellence.';
 export const CERTIFICATE_ORGANIZATION_DEFAULT = 'EXTRACLS';
-export const LOGO_PATH = '/Extra_cls/logo/logo_main_2.png';
+/** Default site logo (footer, auth, dashboard, etc.). Navbar uses NAV_LOGO_PATH only. */
+export const LOGO_PATH = '/Extra_cls/logo/logo.png';
 export const LOGO_COMPACT_PATH = '/Extra_cls/logo/logo.png';
+export const NAV_LOGO_PATH = '/Extra_cls/logo/nav_logo.jpeg';
 export const MENTOR_IMAGE_PATH = '/Extra_cls/landing/training-guidance.jpg';
 /** Default course certificate artwork (full design — overlays add name, course, date, serial) */
-export const CERTIFICATE_DEFAULT_IMAGE = '/Extra_cls/logo/logo_main_2.png';
+export const CERTIFICATE_DEFAULT_IMAGE = '/Extra_cls/logo/logo.png';
+
+export const PLAY_STORE_URL = (import.meta.env.VITE_PLAY_STORE_URL || '').trim();
+export const APP_STORE_URL = (import.meta.env.VITE_APP_STORE_URL || '').trim();
 
 export const MENTOR_NAME = 'Our Educators';
 export const MENTOR_TITLE = 'Experienced Educators & Subject Experts';

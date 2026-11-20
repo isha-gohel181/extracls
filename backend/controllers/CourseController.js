@@ -224,6 +224,7 @@ export const createCourse = async (req, res) => {
       isPublished: parseBoolean(req.body.isPublished),
       // Featured flag
       isFeatured: parseBoolean(req.body.isFeatured),
+      showFreeDownloadOnLanding: parseBoolean(req.body.showFreeDownloadOnLanding),
       certificateTemplate: parseBoolean(req.body.certificateTemplate),
       isDownloadable: parseBoolean(req.body.isDownloadable),
       courseForum: parseBoolean(req.body.courseForum),
@@ -1219,6 +1220,10 @@ export const getAllCourses = async (req, res) => {
     if (Object.prototype.hasOwnProperty.call(filterParams, 'isFeatured')) {
       filter.isFeatured = String(filterParams.isFeatured).toLowerCase() === 'true';
     }
+    if (Object.prototype.hasOwnProperty.call(filterParams, 'showFreeDownloadOnLanding')) {
+      filter.showFreeDownloadOnLanding =
+        String(filterParams.showFreeDownloadOnLanding).toLowerCase() === 'true';
+    }
 
     // Role-based visibility for isPublished
     if (req.user?.role === "admin") {
@@ -1547,6 +1552,9 @@ export const updateCourse = async (req, res) => {
 
       // Only set isFeatured when provided in update payload
       ...(req.body.isFeatured !== undefined && { isFeatured: parseBoolean(req.body.isFeatured) }),
+      ...(req.body.showFreeDownloadOnLanding !== undefined && {
+        showFreeDownloadOnLanding: parseBoolean(req.body.showFreeDownloadOnLanding),
+      }),
 
       price: parsePrice(req.body.price),
       salePrice: req.body.salePrice !== undefined && req.body.salePrice !== '' ? req.body.salePrice : undefined, // <-- always pass as string/number

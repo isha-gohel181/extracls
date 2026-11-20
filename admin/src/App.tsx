@@ -107,6 +107,8 @@ const EbookList = lazy(() => import("./pages/Ebooks/EbookList"));
 const AddEditEbook = lazy(() => import("./pages/Ebooks/AddEditEbook"));
 const BookOrderList = lazy(() => import("./pages/Ebooks/BookOrderList"));
 const CourseFeedbacks = lazy(() => import("./pages/CourseFeedbacks/CourseFeedbacks"));
+const FreeContentList = lazy(() => import("./pages/FreeContent/FreeContentList"));
+const AddEditFreeContent = lazy(() => import("./pages/FreeContent/AddEditFreeContent"));
 
 
 export default function App() {
@@ -248,6 +250,14 @@ export default function App() {
                 <Route path="/banner" element={<AllBanners />} />
                 <Route path="/banner/add" element={<AddBanner />} />
                 <Route path="/banner/edit/:id" element={<EditBanner />} />
+
+                {/* Free Content */}
+                <Route path="/content/free" element={<FreeContentList />} />
+                <Route path="/content/free/add" element={<AddEditFreeContent />} />
+                <Route path="/content/free/edit/:id" element={<AddEditFreeContent />} />
+                <Route path="/free-content" element={<Navigate to="/content/free" replace />} />
+                <Route path="/free-content/add" element={<Navigate to="/content/free/add" replace />} />
+                <Route path="/free-content/edit/:id" element={<Navigate to="/content/free/edit/:id" replace />} />
 
                 {/* News */}
                 <Route path="/news" element={<NewsList />} />

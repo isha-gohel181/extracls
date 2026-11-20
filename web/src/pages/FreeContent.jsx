@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { useSearchParams, Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { freePdfsData, freeClassesData, freeTestsData, freeContentCategories } from '../data/freeContentData'
+import { fetchPublicFreeContent, resolveFreeThumbnail } from '../api/freeContent.js'
+import { getImageBase } from '../utils/apiBase.js'
 import RollingText from '../components/RollingText'
 import { useLanguage } from '../context/LanguageContext'
 
@@ -15,6 +17,69 @@ const FreeContent = () => {
   const [activeTab, setActiveTab] = useState(initialTab)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [apiPdfs, setApiPdfs] = useState(null)
+  const [apiClasses, setApiClasses] = useState(null)
+  const [apiTests, setApiTests] = useState(null)
+
+  useEffect(() => {
+    let cancelled = false
+    ;(async () => {
+      try {
+        const contents = await fetchPublicFreeContent({ limit: 100 })
+        if (cancelled || !contents.length) return
+        const base = getImageBase().replace(/\/+$/, '')
+        const fileUrl = (path) => {
+          if (!path) return ''
+          if (path.startsWith('http')) return path
+          return `${base}${path.startsWith('/') ? '' : '/'}${path}`
+        }
+        setApiPdfs(
+          contents
+            .filter((c) => c.contentType === 'pdf')
+            .map((c) => ({
+              id: c._id,
+              title: c.title,
+              description: c.description || '',
+              category: 'Resources',
+              fileUrl: fileUrl(c.fileUrl),
+              thumbnail: resolveFreeThumbnail(c) || '',
+            }))
+        )
+        setApiClasses(
+          contents
+            .filter((c) => c.contentType === 'class')
+            .map((c) => ({
+              id: c._id,
+              title: c.title,
+              description: c.description || '',
+              category: 'Classes',
+              videoUrl: c.videoUrl || c.fileUrl,
+              thumbnail: resolveFreeThumbnail(c) || '',
+            }))
+        )
+        setApiTests(
+          contents
+            .filter((c) => c.contentType === 'test')
+            .map((c) => ({
+              id: c._id,
+              title: c.title,
+              description: c.description || '',
+              category: 'Practice',
+              quiz: c.freeQuiz,
+            }))
+        )
+      } catch {
+        /* keep static fallback */
+      }
+    })()
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const pdfsSource = apiPdfs ?? freePdfsData
+  const classesSource = apiClasses ?? freeClassesData
+  const testsSource = apiTests ?? freeTestsData
 
   // Modals state
   const [activePdfModal, setActivePdfModal] = useState(null)
@@ -74,36 +139,36 @@ const FreeContent = () => {
 
   // Filter Data
   const filteredPdfs = useMemo(() => {
-    return freePdfsData.filter((item) => {
+    return pdfsSource.filter((item) => {
       const matchesSearch =
         item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.topics.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()))
+        (item.topics || []).some((topic) => topic.toLowerCase().includes(searchQuery.toLowerCase()))
       const matchesCat = selectedCategory === 'All' || item.category === selectedCategory
       return matchesSearch && matchesCat
     })
-  }, [searchQuery, selectedCategory])
+  }, [searchQuery, selectedCategory, pdfsSource])
 
   const filteredClasses = useMemo(() => {
-    return freeClassesData.filter((item) => {
+    return classesSource.filter((item) => {
       const matchesSearch =
         item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.instructor.toLowerCase().includes(searchQuery.toLowerCase())
+        (item.instructor || '').toLowerCase().includes(searchQuery.toLowerCase())
       const matchesCat = selectedCategory === 'All' || item.category === selectedCategory
       return matchesSearch && matchesCat
     })
-  }, [searchQuery, selectedCategory])
+  }, [searchQuery, selectedCategory, classesSource])
 
   const filteredTests = useMemo(() => {
-    return freeTestsData.filter((item) => {
+    return testsSource.filter((item) => {
       const matchesSearch =
         item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.description.toLowerCase().includes(searchQuery.toLowerCase())
       const matchesCat = selectedCategory === 'All' || item.category === selectedCategory
       return matchesSearch && matchesCat
     })
-  }, [searchQuery, selectedCategory])
+  }, [searchQuery, selectedCategory, testsSource])
 
   // Quiz Handling
   const startQuiz = (test) => {

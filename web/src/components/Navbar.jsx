@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import RollingText from './RollingText'
 import { useTheme } from '../context/ThemeContext'
 import { useLanguage } from '../context/LanguageContext'
-import { APP_DISPLAY_NAME, LOGO_PATH } from '../constants/brand'
+import { APP_DISPLAY_NAME, NAV_LOGO_PATH } from '../constants/brand'
 
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -231,7 +231,13 @@ const Navbar = ({ isLoaded }) => {
         >
 
           <Link to="/" ref={logoRef} className="flex items-center hover:opacity-80 transition-opacity gap-2.5">
-            <img src={LOGO_PATH} alt={APP_DISPLAY_NAME} className="h-9 md:h-11 w-auto object-contain" />
+            <span className="inline-flex items-center shrink-0 overflow-hidden rounded-xl bg-black border border-slate-300/50 shadow-sm">
+              <img
+                src={NAV_LOGO_PATH}
+                alt={APP_DISPLAY_NAME}
+                className="h-9 md:h-10 w-auto max-w-[10.5rem] md:max-w-[12rem] object-contain"
+              />
+            </span>
           </Link>
 
           <div
@@ -296,7 +302,13 @@ const Navbar = ({ isLoaded }) => {
           {/* Internal Menu Header */}
           <header className="menu-header absolute top-0 left-0 w-full px-8 md:px-12 py-8 md:py-10 flex items-center justify-between z-50">
             <Link to="/" onClick={toggleMenu} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-              <img src={LOGO_PATH} alt={APP_DISPLAY_NAME} className="h-10 md:h-12 w-auto object-contain" />
+              <span className="inline-flex items-center shrink-0 overflow-hidden rounded-xl bg-black border border-slate-300/50 shadow-sm">
+                <img
+                  src={NAV_LOGO_PATH}
+                  alt={APP_DISPLAY_NAME}
+                  className="h-9 md:h-10 w-auto max-w-[10.5rem] md:max-w-[12rem] object-contain"
+                />
+              </span>
             </Link>
 
             <button

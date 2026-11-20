@@ -40,6 +40,18 @@ class FreeContentService {
   async deleteContent(id) {
     return await FreeContent.findByIdAndDelete(id);
   }
+
+  async getLandingCarousel(limit = 12) {
+    return await FreeContent.find({
+      contentType: 'class',
+      isActive: true,
+      showOnLandingCarousel: true,
+    })
+      .select('title description videoUrl fileUrl thumbnail isDownloadable landingSortOrder')
+      .sort({ landingSortOrder: 1, createdAt: -1 })
+      .limit(limit)
+      .lean();
+  }
 }
 
 export default FreeContentService;

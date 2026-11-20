@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Link } from 'react-router-dom'
+import SiteBrandLogo from './SiteBrandLogo'
 import {
   APP_DISPLAY_NAME,
   APP_TAGLINE,
-  LOGO_PATH,
   SUPPORT_EMAIL,
   ABOUT_US_FOOTER_EXCERPT,
   SUPPORT_PHONE_TEL,
@@ -60,11 +60,7 @@ const Footer = () => {
           {/* Column 1: Brand & Bio (4 cols) */}
           <div className="footer-reveal lg:col-span-4 space-y-4">
             <Link to="/" className="inline-block hover:opacity-90 transition-opacity" aria-label={`${APP_DISPLAY_NAME} Home`}>
-              <img
-                alt={APP_DISPLAY_NAME}
-                className="h-14 md:h-16 w-auto max-w-[200px] object-contain drop-shadow-[0_8px_24px_rgba(0,0,0,0.25)]"
-                src={LOGO_PATH}
-              />
+              <SiteBrandLogo size="footer" variant="dark" className="drop-shadow-[0_8px_24px_rgba(0,0,0,0.25)]" />
             </Link>
 
             <p className="font-jetbrains text-xs md:text-sm text-white/85 leading-relaxed max-w-sm">

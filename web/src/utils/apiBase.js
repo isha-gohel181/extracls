@@ -1,10 +1,15 @@
 const DEV_DEFAULT = 'http://localhost:5000';
 
 export function getApiBase() {
-  const raw =
-    import.meta.env.VITE_BASE_URL ||
-    import.meta.env.VITE_API_BASE ||
-    DEV_DEFAULT;
+  // In dev, prefer VITE_API_BASE so a duplicated VITE_BASE_URL (e.g. production) in .env
+  // does not override localhost while admin saves to the local API.
+  const raw = import.meta.env.DEV
+    ? import.meta.env.VITE_API_BASE ||
+      import.meta.env.VITE_BASE_URL ||
+      DEV_DEFAULT
+    : import.meta.env.VITE_BASE_URL ||
+      import.meta.env.VITE_API_BASE ||
+      DEV_DEFAULT;
   return String(raw).replace(/\/+$/, '');
 }
 

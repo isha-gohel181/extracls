@@ -7,16 +7,19 @@ import {
   deleteFreeContent,
   startFreeQuiz,
   submitFreeQuiz,
-  getFreeQuizHistory
+  getFreeQuizHistory,
+  getLandingCarousel,
 } from '../controllers/freeContentController.js';
 import accessTokenAutoRefresh from '../middlewares/accessTokenAutoRefresh.js';
 import passport from 'passport';
 import { isAdmin } from '../middlewares/isAdmin.js';
+import optionalAuthenticate from '../middlewares/optionalAuthenticate.js';
 
 const router = express.Router();
 
 // Public / User Routes
-router.get('/', getAllFreeContent);
+router.get('/', optionalAuthenticate, getAllFreeContent);
+router.get('/landing-carousel', getLandingCarousel);
 router.get('/:id', getFreeContentById);
 
 // Free Quiz Execution Routes (Requires Auth)

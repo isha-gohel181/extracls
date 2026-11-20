@@ -52,6 +52,12 @@ const FormatBadge = ({ course }) => (
   </span>
 )
 
+const FreeDownloadBadge = ({ t }) => (
+  <span className="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-jetbrains text-[9px] uppercase tracking-wider font-bold">
+    {t('landingFreeDownloadBadge')}
+  </span>
+)
+
 const PriceRow = ({ label, original, t, compact }) => (
   <div className={`flex items-end justify-between gap-3 ${compact ? 'pt-3 mt-2 border-t border-[#E2EAF3]' : 'pt-4 mt-auto border-t border-[#E2EAF3]'}`}>
     <div className="min-w-0">
@@ -94,6 +100,7 @@ const LandingCourseCard = ({ course }) => {
       <div className="relative aspect-[16/10] border-b border-[#E2EAF3]">
         <CourseThumbnail thumb={thumb} t={t} className="absolute inset-0" />
         <FormatBadge course={course} />
+        {course.showFreeDownloadOnLanding && <FreeDownloadBadge t={t} />}
       </div>
       <div className="flex flex-col flex-1 p-5 md:p-6 gap-2">
         <span className="font-jetbrains text-[10px] uppercase tracking-[0.22em] text-[#1a5f9e] font-semibold truncate">
@@ -122,6 +129,7 @@ const LandingFeaturedCourseCard = ({ course }) => {
       <div className="relative lg:w-[44%] shrink-0 aspect-[16/10] lg:aspect-auto lg:min-h-[280px] border-b lg:border-b-0 lg:border-r border-[#E2EAF3]">
         <CourseThumbnail thumb={thumb} t={t} className="absolute inset-0" />
         <FormatBadge course={course} />
+        {course.showFreeDownloadOnLanding && <FreeDownloadBadge t={t} />}
       </div>
       <div className="flex flex-col flex-1 p-6 md:p-8 lg:p-10 gap-3">
         <span className="font-jetbrains text-[10px] uppercase tracking-[0.22em] text-[#1a5f9e] font-semibold">
@@ -243,8 +251,8 @@ const LandingCoursesSection = () => {
     const list = Array.isArray(courses) ? courses.filter((c) => c && (c._id || c.id)) : []
     if (list.length === 0) return []
     const sorted = [...list].sort((a, b) => {
-      const af = a.isFeatured ? 1 : 0
-      const bf = b.isFeatured ? 1 : 0
+      const af = (a.isFeatured ? 1 : 0) + (a.showFreeDownloadOnLanding ? 1 : 0)
+      const bf = (b.isFeatured ? 1 : 0) + (b.showFreeDownloadOnLanding ? 1 : 0)
       return bf - af
     })
     return sorted.slice(0, 6)

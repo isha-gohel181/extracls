@@ -13,6 +13,8 @@ const freeContentSchema = new mongoose.Schema({
   thumbnail: { type: String },
   isDownloadable: { type: Boolean, default: false },
   isActive: { type: Boolean, default: true },
+  showOnLandingCarousel: { type: Boolean, default: false },
+  landingSortOrder: { type: Number, default: 0 },
   
   // Reference to FreeQuiz if contentType is 'test'
   freeQuiz: { type: mongoose.Schema.Types.ObjectId, ref: 'FreeQuiz' },

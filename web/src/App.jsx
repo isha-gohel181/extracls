@@ -39,6 +39,7 @@ import SessionExpiredPopup from './components/SessionExpiredPopup'
 import DashboardLiveClasses from './pages/DashboardLiveClasses'
 import Contact from './pages/Contact'
 import AboutUs from './pages/AboutUs'
+import FreeContent from './pages/FreeContent'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import Terms from './pages/Terms'
 import RefundPolicy from './pages/RefundPolicy'
@@ -335,6 +336,7 @@ const AppContent = () => {
             <Route path="/personality-test" element={<PersonalityTest />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/free-content" element={<FreeContent />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-conditions" element={<Terms />} />
             <Route path="/refund-policy" element={<RefundPolicy />} />

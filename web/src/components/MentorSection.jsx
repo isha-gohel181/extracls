@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import SiteBrandLogo from './SiteBrandLogo'
 import {
   LOGO_PATH,
   MENTOR_IMAGE_PATH,
@@ -58,7 +59,7 @@ const MentorSection = () => {
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center p-8">
-                    <img src={LOGO_PATH} alt="" className="max-h-40 object-contain opacity-40" />
+                    <SiteBrandLogo size="watermark" imgClassName="opacity-40" />
                   </div>
                 )}
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#142B5C]/45 via-transparent to-transparent" />

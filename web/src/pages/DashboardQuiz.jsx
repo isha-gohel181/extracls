@@ -5,6 +5,7 @@ import { fetchCourseDetail } from '../redux/slices/courseSlice'
 import sanitizeDisplay from '../utils/textSanitize'
 import authorizedFetch from '../utils/apiClient'
 import DashboardHeader from '../components/dashboard/DashboardHeader'
+import SiteBrandLogo from '../components/SiteBrandLogo'
 
 const DashboardQuiz = () => {
     const params = useParams()
@@ -291,7 +292,7 @@ const DashboardQuiz = () => {
                                 <polyline points="12 19 5 12 12 5" />
                             </svg>
                         </Link>
-                        <img src="/Extra_cls/logo/logo_main_2.png" alt="EXTRACLS" className="h-8 w-auto object-contain" />
+                        <SiteBrandLogo size="sm" />
                         <div className="h-6 w-[1px] bg-slate-200" />
                         <span className="font-semibold text-slate-800 text-sm">
                             {sanitizeDisplay(quiz.quizTitle)} - Evaluation Results
@@ -648,7 +649,7 @@ const DashboardQuiz = () => {
                     </Link>
                     
                     {/* Logo */}
-                    <img src="/Extra_cls/logo/logo_main_2.png" alt="EXTRACLS" className="h-8 w-auto object-contain" />
+                    <SiteBrandLogo size="sm" />
 
                     {/* Vertical divider */}
                     <div className="h-6 w-[1px] bg-slate-200" />

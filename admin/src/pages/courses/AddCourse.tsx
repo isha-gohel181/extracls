@@ -544,6 +544,7 @@ const AddCourse = () => {
     isSubscription: false,
     isPrivate: false,
     enableWaitlist: false,
+    showFreeDownloadOnLanding: false,
     coursePosition: "",
     // Mentor fields
     mentorName: "",
@@ -1725,6 +1726,18 @@ const AddCourse = () => {
                     <span className="text-sm font-medium text-gray-700 dark:text-gray-200 flex items-center gap-2">
                       <Clock className="w-4 h-4 text-blue-600" />
                       Enable Waitlist
+                    </span>
+                  </label>
+                  <label className="flex items-center gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      name="showFreeDownloadOnLanding"
+                      checked={formData.showFreeDownloadOnLanding}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-emerald-600 border-gray-300 dark:border-gray-600 rounded focus:ring-emerald-500"
+                    />
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
+                      Show free download on landing
                     </span>
                   </label>
                 </div>

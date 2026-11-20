@@ -152,6 +152,11 @@ const navItems: NavItem[] = [
     name: "Testimonials",
     path: "/testimonials"
   },
+  {
+    icon: <PageIcon />,
+    name: "Free Content",
+    path: "/content/free"
+  },
   // {
   //   icon: <Bot />,
   //   name: "AI Tool",

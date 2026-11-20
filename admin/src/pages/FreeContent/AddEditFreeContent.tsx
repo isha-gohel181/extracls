@@ -24,6 +24,8 @@ export default function AddEditFreeContent() {
     videoUrl: "",
     isDownloadable: false,
     isActive: true,
+    showOnLandingCarousel: false,
+    landingSortOrder: 0,
     thumbnail: "",
     freeQuiz: "",
   });
@@ -48,7 +50,11 @@ export default function AddEditFreeContent() {
     try {
       const { data } = await axiosInstance.get(`/free-content/${id}`);
       if (data.success) {
-        setFormData(data.data);
+        setFormData({
+          ...data.data,
+          showOnLandingCarousel: !!data.data.showOnLandingCarousel,
+          landingSortOrder: data.data.landingSortOrder ?? 0,
+        });
         if (data.data.thumbnail) {
           const imgBase = (getImageBase()).replace(/\/+$/, '');
           setThumbnailPreview(data.data.thumbnail.startsWith('http') ? data.data.thumbnail : `${imgBase}${data.data.thumbnail.startsWith('/') ? '' : '/'}${data.data.thumbnail}`);
@@ -119,9 +125,10 @@ export default function AddEditFreeContent() {
       } else {
         await axiosInstance.post("/free-content", submitData, config);
       }
-      navigate("/free-content");
+      navigate("/content/free");
     } catch (error) {
       console.error("Error saving content", error);
+      window.alert("Save failed. Check that the backend is running and you are logged in as admin.");
     } finally {
       setLoading(false);
     }
@@ -195,16 +202,43 @@ export default function AddEditFreeContent() {
           )}
 
           {formData.contentType === "class" && (
-            <div>
-              <Label>Video URL</Label>
-              <Input
-                type="text"
-                name="videoUrl"
-                value={formData.videoUrl}
-                onChange={handleChange}
-                placeholder="https://..."
-              />
-              <p className="text-xs text-gray-500 mt-1">Provide YouTube, Vimeo, MP4 or VdoCipher URL.</p>
+            <div className="space-y-4 rounded-xl border border-gray-200 p-4 dark:border-gray-700">
+              <div>
+                <Label>Video URL</Label>
+                <Input
+                  type="text"
+                  name="videoUrl"
+                  value={formData.videoUrl}
+                  onChange={handleChange}
+                  placeholder="https://www.youtube.com/watch?v=..."
+                />
+                <p className="text-xs text-gray-500 mt-1">YouTube or Vimeo URL for the home page carousel.</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  name="showOnLandingCarousel"
+                  id="showOnLandingCarousel"
+                  checked={!!formData.showOnLandingCarousel}
+                  onChange={handleChange}
+                  className="w-4 h-4 text-brand-500 bg-gray-100 border-gray-300 rounded focus:ring-brand-500"
+                />
+                <Label htmlFor="showOnLandingCarousel" className="mb-0">
+                  Show on landing page video carousel
+                </Label>
+              </div>
+              {formData.showOnLandingCarousel && (
+                <div>
+                  <Label>Carousel order (lower = first)</Label>
+                  <Input
+                    type="number"
+                    name="landingSortOrder"
+                    value={formData.landingSortOrder}
+                    onChange={handleChange}
+                    min={0}
+                  />
+                </div>
+              )}
             </div>
           )}
 
@@ -255,7 +289,7 @@ export default function AddEditFreeContent() {
               size="sm"
               variant="outline"
               type="button"
-              onClick={() => navigate("/free-content")}
+              onClick={() => navigate("/content/free")}
               className="mr-3"
             >
               Cancel

@@ -571,6 +571,26 @@ const translations = {
     landingCoursesCta: 'Details',
     landingCoursesCategoryFallback: 'Education',
 
+    landingFreeResourcesEyebrow: 'Free resources',
+    landingFreeResourcesTitle: 'Watch free classes',
+    landingFreeResourcesSub: 'Sample lessons and ideas from our educators—no sign-up required to preview.',
+    landingFreeResourcesCta: 'Explore free library',
+    landingFreeResourcesPrev: 'Previous video',
+    landingFreeResourcesNext: 'Next video',
+
+    landingFreeDownloadEyebrow: 'Free downloads',
+    landingFreeDownloadTitle: 'Courses with free study materials',
+    landingFreeDownloadSub: 'Download worksheets and resources selected by our team—open the course page for files and details.',
+    landingFreeDownloadBadge: 'Free download',
+    landingFreeDownloadCta: 'View course',
+
+    landingAppDownloadEyebrow: 'iOS & Android',
+    landingAppDownloadTitle: 'Download the EXTRACLS app',
+    landingAppDownloadSub:
+      'Access courses, study materials, and updates from your phone—built for families and young learners.',
+    landingAppDownloadPlay: 'Get EXTRACLS on Google Play',
+    landingAppDownloadApple: 'Download EXTRACLS on the App Store',
+
     whyPearlsEyebrow: 'Why EXTRACLS',
     whyPearlsTitle: 'Six reasons families trust our approach',
     whyPearlsSub: 'Practical, joyful education—not rote memorization alone.',
@@ -1320,6 +1340,26 @@ const translations = {
     landingCoursesFrom: 'से',
     landingCoursesCta: 'विवरण',
     landingCoursesCategoryFallback: 'शिक्षा',
+
+    landingFreeResourcesEyebrow: 'मुफ़्त संसाधन',
+    landingFreeResourcesTitle: 'मुफ़्त कक्षाएँ देखें',
+    landingFreeResourcesSub: 'हमारे शिक्षकों के नमूना पाठ और विचार—पूर्वावलोकन के लिए साइन अप की ज़रूरत नहीं।',
+    landingFreeResourcesCta: 'मुफ़्त लाइब्रेरी देखें',
+    landingFreeResourcesPrev: 'पिछला वीडियो',
+    landingFreeResourcesNext: 'अगला वीडियो',
+
+    landingFreeDownloadEyebrow: 'मुफ़्त डाउनलोड',
+    landingFreeDownloadTitle: 'मुफ़्त अध्ययन सामग्री वाले कोर्स',
+    landingFreeDownloadSub: 'टीम द्वारा चुनी गई वर्कशीट और संसाधन—फाइलों के लिए कोर्स पेज खोलें।',
+    landingFreeDownloadBadge: 'मुफ़्त डाउनलोड',
+    landingFreeDownloadCta: 'कोर्स देखें',
+
+    landingAppDownloadEyebrow: 'iOS और Android',
+    landingAppDownloadTitle: 'EXTRACLS ऐप डाउनलोड करें',
+    landingAppDownloadSub:
+      'कोर्स, अध्ययन सामग्री और अपडेट अपने फ़ोन पर—परिवारों और छोटे शिक्षार्थियों के लिए।',
+    landingAppDownloadPlay: 'Google Play पर EXTRACLS प्राप्त करें',
+    landingAppDownloadApple: 'App Store पर EXTRACLS डाउनलोड करें',
 
     whyPearlsEyebrow: 'EXTRACLS क्यों',
     whyPearlsTitle: 'छह कारण जिन पर परिवार हमारे दृष्टिकोण पर भरोसा करते हैं',
