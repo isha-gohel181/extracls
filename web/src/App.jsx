@@ -43,6 +43,7 @@ import FreeContent from './pages/FreeContent'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import Terms from './pages/Terms'
 import RefundPolicy from './pages/RefundPolicy'
+import NotFound from './pages/NotFound'
 import { TrackerProvider } from './components/ActivityTracker'
 
 import GlobalChatButton from './components/dashboard/GlobalChatButton'
@@ -320,9 +321,9 @@ const AppContent = () => {
       {/* 2. Main Site Content Wrapper (Perspective Ready) */}
       <div
         id="content-wrapper"
-        className={`relative min-h-screen origin-right ${isCleanPage ? 'bg-dark' : ''}`}
+        className={`relative min-h-screen origin-right flex flex-col justify-between ${isCleanPage ? 'bg-dark' : ''}`}
       >
-        <main>
+        <main className="flex-1 flex flex-col">
           <SecureWrapper>
           <Routes>
             {/* Public Routes */}
@@ -382,6 +383,9 @@ const AppContent = () => {
             <Route path="/purchases" element={<Navigate to="/dashboard/purchases" replace />} />
             <Route path="/my-courses" element={<Navigate to="/dashboard/my-courses" replace />} />
             <Route path="/dashboard-home" element={<Navigate to="/dashboard" replace />} />
+
+            {/* Catch-all 404 Route */}
+            <Route path="*" element={<NotFound />} />
 
           </Routes>
           </SecureWrapper>

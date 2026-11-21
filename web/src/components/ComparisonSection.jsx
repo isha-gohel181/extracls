@@ -1,4 +1,4 @@
-import { getApiBase } from '../utils/apiBase.js';
+import { getApiBase } from '../utils/apiBase.js'
 import React, { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
@@ -9,53 +9,15 @@ import { useLanguage } from '../context/LanguageContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const comparison = [
-  {
-    traditional: "Beginner focus, theory-heavy content",
-    our: "100% practical, Real-world campaigns."
-  },
-  {
-    traditional: "Taught by someone who has never run an agency",
-    our: "Taught by a 14+ year agency owner with real experience."
-  },
-  {
-    traditional: "Prepares you for jobs and makes you dependent",
-    our: "Focus on entrepreneurship and business building."
-  },
-  {
-    traditional: "They focus on specific topic like SEO, FB Ads, Google Ads.",
-    our: "Complete agency setup guide covering all aspects with skills."
-  },
-  {
-    traditional: "2 hours 3 day week class",
-    our: "Self-paced learning"
-  },
-  {
-    traditional: "No mentorship provided",
-    our: "Mentorship Provided"
-  }
-]
-
-const features = [
-  "Train your custom GPT's",
-  "Learn client On-boarding and handover.",
-  "Learn Project Management and delegation",
-  "Hands-on Sales Training",
-  "Understand employee profitability and KRA's.",
-  "One on One Mentorship"
-]
-
 const ComparisonSection = ({ course, section }) => {
   const containerRef = useRef(null)
 
   // Use section data if provided, otherwise fallback to course data
-  const targetSection = section || course?.comparisonSection;
-  // Local sanitizer to correct display labels
-  const sanitize = (t) => sanitizeDisplay(t);
+  const targetSection = section || course?.comparisonSection
+  const sanitize = (t) => sanitizeDisplay(t)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 0. Solopreneur intro reveal - Snappy & micro-motion (90% lighter)
       gsap.fromTo('.solo-heading',
         { opacity: 0, y: 4 },
         {
@@ -71,7 +33,6 @@ const ComparisonSection = ({ course, section }) => {
         }
       )
 
-      // 1. Comparison Rows reveal (90% lighter: x: 5px, duration 0.25s)
       gsap.utils.toArray('.comparison-row').forEach((row, i) => {
         gsap.fromTo(row,
           { opacity: 0, x: i % 2 === 0 ? -5 : 5 },
@@ -85,7 +46,6 @@ const ComparisonSection = ({ course, section }) => {
         )
       })
 
-      // 2. Feature Cards reveal (90% lighter: y: 4px, duration 0.25s, stagger 0.02s)
       gsap.fromTo('.feature-card',
         { opacity: 0, y: 4, scale: 0.99 },
         {
@@ -97,7 +57,6 @@ const ComparisonSection = ({ course, section }) => {
         }
       )
 
-      // 3. CTA reveal (90% lighter: y: 4px, duration 0.3s)
       gsap.fromTo('.cta-reveal',
         { opacity: 0, y: 4 },
         {
@@ -113,180 +72,172 @@ const ComparisonSection = ({ course, section }) => {
     return () => ctx.revert()
   }, [])
 
-  // Use API comparison points or fallback to default
-  const apiComparison = (targetSection?.leftPoints?.map((trad, i) => ({
+  // Use dynamic comparison points strictly from API
+  const leftPoints = targetSection?.leftPoints || []
+  const rightPoints = targetSection?.rightPoints || []
+  const apiComparison = leftPoints.map((trad, i) => ({
     traditional: trad,
-    our: targetSection.rightPoints[i] || ""
-  })) || [
-      { traditional: "Beginner focus, theory-heavy content", our: "100% practical, Real-world campaigns." },
-      { traditional: "Taught by someone who has never run an agency", our: "Taught by a 14+ year agency owner with real experience." },
-      { traditional: "Prepares you for jobs and makes you dependent", our: "Focus on entrepreneurship and business building." },
-      { traditional: "They focus on specific topic like SEO, FB Ads, Google Ads.", our: "Complete agency setup guide covering all aspects with skills." },
-      { traditional: "2 hours 3 day week class", our: "Self-paced learning" },
-      { traditional: "No mentorship provided", our: "Mentorship Provided" }
-    ]).slice(0, 5);
+    our: rightPoints[i] || '',
+  }))
 
   const manifestoPointers = targetSection?.content?.blocks?.map(block => 
     sanitizeDisplay(block.data?.text || '').replace(/&nbsp;/g, ' ')
-  ).filter(t => t && t.trim() !== '') || [];
+  ).filter(t => t && t.trim() !== '') || []
 
-  const apiFeatures = (manifestoPointers.length > 0 ? manifestoPointers : (course?.benefitsSection?.points || [
-    "Train your custom GPT's",
-    "Learn client On-boarding and handover.",
-    "Learn Project Management and delegation",
-    "Hands-on Sales Training",
-    "Understand employee profitability and KRA's.",
-    "One on One Mentorship"
-  ])).slice(0, 6);
+  const apiFeatures = manifestoPointers.length > 0
+    ? manifestoPointers
+    : (course?.benefitsSection?.points || [])
 
-
+  const sectionTitle = targetSection?.title || (course?.title ? `Why Choose ${course.title}` : 'Program Comparison')
+  const sectionSubtitle = targetSection?.subtitle || course?.subtitle || ''
 
   return (
     <section ref={containerRef} className="max-w-7xl mx-auto mb-24 px-4 md:px-0">
-
-      {/* SOLOPRENEUR INTRO */}
-      <div className="mb-24 text-center space-y-8">
-        <div className="space-y-4">
-          <h2 className="solo-heading font-newsreader mb-2 italic text-[clamp(2rem,6vw,5.5rem)] text-slate-900 font-extralight leading-tight">
-            What is a <span className="text-[#C96A1B] underline-lime">{sanitize(course?.title) || 'Solopreneur'}?</span>
+      {/* INTRO */}
+      <div className="mb-20 text-center space-y-6">
+        <div className="space-y-3">
+          <h2 className="solo-heading font-newsreader italic text-[clamp(2rem,5.5vw,4.5rem)] text-slate-900 font-extralight leading-tight">
+            {sanitize(sectionTitle)}
           </h2>
-          <p className="solo-heading font-montserrat pb-4 text-[#C96A1B] text-[14px] md:text-xs font-semibold max-w-md mx-auto leading-[2.2] tracking-widest uppercase">
-            {sanitizeDisplay(targetSection?.subtitle || course.subtitle || '')}
-          </p>
+          {sectionSubtitle && (
+            <p className="solo-heading font-montserrat text-[#1a5f9e] text-xs md:text-sm font-semibold max-w-xl mx-auto leading-relaxed tracking-wider uppercase">
+              {sanitizeDisplay(sectionSubtitle)}
+            </p>
+          )}
 
           {targetSection?.description?.blocks ? (
-            <div className="solo-heading font-jetbrains text-xs md:text-sm text-slate-600 max-w-4xl mx-auto leading-[2] tracking-wide space-y-4">
+            <div className="solo-heading font-montserrat text-sm text-slate-600 max-w-3xl mx-auto leading-relaxed space-y-3 pt-2">
               {targetSection.description.blocks.map((block, bi) => (
                 <p key={bi}>{sanitizeDisplay(block.data?.text || '').replace(/&nbsp;/g, ' ')}</p>
               ))}
             </div>
-          ) : (
-            <div className="solo-heading font-jetbrains text-xs md:text-sm text-slate-600 max-w-4xl mx-auto leading-[2] tracking-wide">
-              {sanitizeDisplay(course.comparisonText || "Use AI, Freelancers and tools to automate high margin agency business without pressure of hiring. This offers flexible hours and allows you to work from anywhere.")}
+          ) : targetSection?.description && typeof targetSection.description === 'string' ? (
+            <div className="solo-heading font-montserrat text-sm text-slate-600 max-w-3xl mx-auto leading-relaxed pt-2">
+              {sanitizeDisplay(targetSection.description)}
             </div>
-          )}
+          ) : null}
         </div>
 
-        {/* Image */}
-        <div className="solo-image-wrap relative group overflow-hidden max-w-2xl mx-auto shadow-xl rounded-2xl border border-slate-200">
-          {/* Decorative corner markers */}
-          <div className="absolute top-4 left-4 z-20 w-8 h-8 border-t-2 border-l-2 border-[#C96A1B]/40 opacity-0 group-hover:opacity-100 transition-all duration-500" />
-          <div className="absolute top-4 right-4 z-20 w-8 h-8 border-t-2 border-r-2 border-[#C96A1B]/40 opacity-0 group-hover:opacity-100 transition-all duration-500" />
-          <div className="absolute bottom-4 left-4 z-20 w-8 h-8 border-b-2 border-l-2 border-[#C96A1B]/40 opacity-0 group-hover:opacity-100 transition-all duration-500" />
-          <div className="absolute bottom-4 right-4 z-20 w-8 h-8 border-b-2 border-r-2 border-[#C96A1B]/40 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+        {/* Course Cover Image (if available) */}
+        {course?.coverImage && (
+          <div className="solo-image-wrap relative group overflow-hidden max-w-3xl mx-auto shadow-xl rounded-2xl border border-slate-200">
+            <img
+              src={(() => {
+                const img = course.coverImage
+                if (!img) return comparisonImg
+                if (img.startsWith('http')) return img
+                const rawBase = import.meta.env.VITE_IMAGE_URL || getApiBase()
+                const baseUrl = rawBase.replace(/\/api\/v1\/?$/, '')
+                return `${baseUrl}${img.startsWith('/') ? '' : '/'}${img}`
+              })()}
+              alt={sanitize(course.title)}
+              className="w-full aspect-[16/9] object-cover transition-all duration-700 group-hover:scale-[1.01]"
+            />
+          </div>
+        )}
+      </div>
 
-          {/* LIVE badge */}
-          <div className="absolute top-6 left-6 z-20 flex items-center gap-2 bg-slate-900/80 backdrop-blur-sm px-4 py-2 border border-white/10 rounded-lg">
-            <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" />
-            <span className="font-jetbrains text-[9px] text-white tracking-[0.4em] uppercase font-bold">LIVE</span>
+      {/* Comparison Rows */}
+      {apiComparison.length > 0 && (
+        <div className="mb-20">
+          <div className="flex items-center gap-8 mb-12 opacity-80">
+            <div className="flex-1 h-[1px] bg-slate-200" />
+            <span className="font-jetbrains text-[9px] text-slate-400 tracking-[0.3em] uppercase font-bold shrink-0">
+              Curriculum Comparison
+            </span>
+            <div className="flex-1 h-[1px] bg-slate-200" />
           </div>
 
-          <img
-            src={(() => {
-                const img = course.coverImage;
-                if (!img) return comparisonImg;
-                if (img.startsWith('http')) return img;
-                const rawBase = import.meta.env.VITE_IMAGE_URL || getApiBase();
-                const baseUrl = rawBase.replace(/\/api\/v1\/?$/, '');
-                return `${baseUrl}${img.startsWith('/') ? '' : '/'}${img}`;
-            })()} 
-            alt={sanitize(course.title)}
-            className="w-full object-cover transition-all duration-700 group-hover:scale-[1.01]"
-          />
-        </div>
-      </div>
-
-      {/* Divider */}
-      <div className="flex items-center gap-8 mb-16 opacity-80">
-        <div className="flex-1 h-[1px] bg-slate-200" />
-        <span className="font-jetbrains text-[9px] text-slate-400 tracking-[0.4em] uppercase font-bold shrink-0">Program Comparison / Matrix</span>
-        <div className="flex-1 h-[1px] bg-slate-200" />
-      </div>
-
-      {/* COMPARISON HEADER */}
-      <div className="grid grid-cols-2 gap-8 lg:gap-16 md:mb-12 text-center border-b border-slate-200 pb-8">
-        <div className="space-y-1">
-          <span className="font-jetbrains text-[10px] text-slate-400 tracking-[0.3em] uppercase font-bold">Status / Outdated</span>
-          <h3 className="font-newsreader italic text-2xl md:text-3xl lg:text-5xl text-slate-700 font-extralight tracking-tight">
-            {sanitizeDisplay(course.comparisonSection?.leftTitle || "Traditional Program")}
-          </h3>
-        </div>
-        <div className="space-y-1">
-          <span className="font-jetbrains text-[10px] text-[#C96A1B] tracking-[0.3em] uppercase font-bold">Status / Optimal</span>
-          <h3 className="font-newsreader italic text-2xl md:text-3xl lg:text-5xl text-[#C96A1B] font-normal tracking-tight">
-            {sanitizeDisplay(course.comparisonSection?.rightTitle || "Our Program")}
-          </h3>
-        </div>
-      </div>
-
-      {/* COMPARISON ROWS */}
-      <div className="space-y-4 md:space-y-3 mb-16">
-        {apiComparison.map((item, i) => (
-          <div key={i} className="comparison-row grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-4 py-1 items-center group">
-            {/* Traditional Column */}
-            <div className="flex items-center gap-4 px-4 md:px-5 lg:px-8 py-4 bg-red-50 border-l-4 border-red-500 rounded-xl shadow-xs transition-all duration-300">
-              <div className="w-8 h-8 rounded-full border border-red-200 flex items-center justify-center shrink-0 bg-red-100">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="4"><path d="M18 6L6 18M6 6l12 12" /></svg>
-              </div>
-              <p className="font-montserrat text-xs md:text-xs lg:text-sm text-red-700 font-semibold tracking-wide uppercase">{sanitizeDisplay(item.traditional)}</p>
-            </div>
-
-            {/* Our Program Column */}
-            <div className="flex items-center gap-4 px-4 md:px-6 lg:px-8 py-4 bg-blue-50/80 border-l-4 border-[#C96A1B] rounded-xl shadow-xs transition-all duration-300">
-              <div className="w-8 h-8 rounded-full border border-blue-200 flex items-center justify-center shrink-0 bg-blue-100">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C96A1B" strokeWidth="4"><path d="M20 6L9 17l-5-5" /></svg>
-              </div>
-              <p className="font-montserrat text-xs md:text-xs lg:text-sm text-[#C96A1B] font-semibold tracking-wide uppercase">{sanitizeDisplay(item.our)}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* LOGO MARQUEE */}
-      <div className="mb-20">
-        <LogoMarquee />
-      </div>
-
-      {/* FEATURE GRID (Numbered cards 01-06) */}
-      <div className="feature-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
-        {apiFeatures.map((feat, i) => (
-          <div 
-            key={i} 
-            className="feature-card border border-slate-200/80 bg-white p-6 md:p-8 rounded-2xl shadow-sm hover:shadow-md hover:border-[#C96A1B]/50 relative group transition-all duration-300 h-full flex flex-col justify-start min-h-[140px]"
-          >
-            <div className="absolute top-3 right-4 select-none pointer-events-none">
-              <span className="font-jetbrains text-3xl md:text-4xl font-black text-[#C96A1B]/20 group-hover:text-[#C96A1B]/40 transition-colors">
-                {String(i + 1).padStart(2, '0')}
+          <div className="grid grid-cols-2 gap-8 lg:gap-16 mb-8 text-center border-b border-slate-200 pb-6">
+            <div className="space-y-1">
+              <span className="font-jetbrains text-[10px] text-slate-400 tracking-[0.2em] uppercase font-bold">
+                Traditional Methods
               </span>
+              <h3 className="font-newsreader italic text-xl md:text-3xl text-slate-700 font-extralight tracking-tight">
+                {sanitizeDisplay(targetSection?.leftTitle || 'Standard Approach')}
+              </h3>
             </div>
-            <div className="flex items-start gap-4 pr-8 relative z-10">
-              <div className="w-2.5 h-2.5 bg-[#C96A1B] rounded-full mt-1.5 shrink-0 shadow-[0_0_8px_rgba(24, 120, 192,0.35)]" />
-              <span className="font-montserrat text-sm md:text-[15px] text-slate-800 font-semibold tracking-wide leading-relaxed">
-                {feat}
+            <div className="space-y-1">
+              <span className="font-jetbrains text-[10px] text-[#1a5f9e] tracking-[0.2em] uppercase font-bold">
+                EXTRACLS Methodology
               </span>
+              <h3 className="font-newsreader italic text-xl md:text-3xl text-[#142B5C] font-normal tracking-tight">
+                {sanitizeDisplay(targetSection?.rightTitle || 'Our Interactive Method')}
+              </h3>
             </div>
           </div>
-        ))}
-      </div>
 
-      {/* BOTTOM CTA */}
-      <div className="cta-reveal text-center space-y-8">
-        <h4 className="font-newsreader italic text-2xl md:text-4xl text-slate-800 font-light tracking-tight">
-          {"Beat the competition with innovative solutions."}
+          <div className="space-y-3">
+            {apiComparison.map((item, i) => (
+              <div key={i} className="comparison-row grid grid-cols-1 md:grid-cols-2 gap-4 py-1 items-center group">
+                <div className="flex items-center gap-4 px-4 md:px-6 py-4 bg-red-50/70 border-l-4 border-red-500 rounded-xl shadow-xs transition-all duration-300">
+                  <div className="w-7 h-7 rounded-full border border-red-200 flex items-center justify-center shrink-0 bg-red-100">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="4">
+                      <path d="M18 6L6 18M6 6l12 12" />
+                    </svg>
+                  </div>
+                  <p className="font-montserrat text-xs md:text-sm text-red-700 font-medium leading-relaxed">
+                    {sanitizeDisplay(item.traditional)}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-4 px-4 md:px-6 py-4 bg-blue-50/70 border-l-4 border-[#55B8F5] rounded-xl shadow-xs transition-all duration-300">
+                  <div className="w-7 h-7 rounded-full border border-blue-200 flex items-center justify-center shrink-0 bg-blue-100">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#142B5C" strokeWidth="4">
+                      <path d="M20 6L9 17l-5-5" />
+                    </svg>
+                  </div>
+                  <p className="font-montserrat text-xs md:text-sm text-[#142B5C] font-semibold leading-relaxed">
+                    {sanitizeDisplay(item.our)}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Feature Grid (if points exist) */}
+      {apiFeatures.length > 0 && (
+        <div className="feature-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+          {apiFeatures.map((feat, i) => (
+            <div
+              key={i}
+              className="feature-card border border-slate-200/80 bg-white p-6 rounded-2xl shadow-sm hover:shadow-md hover:border-[#55B8F5]/50 relative group transition-all duration-300 h-full flex flex-col justify-start min-h-[120px]"
+            >
+              <div className="absolute top-3 right-4 select-none pointer-events-none">
+                <span className="font-jetbrains text-3xl font-black text-[#55B8F5]/20 group-hover:text-[#55B8F5]/40 transition-colors">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+              </div>
+              <div className="flex items-start gap-3.5 pr-8 relative z-10">
+                <div className="w-2.5 h-2.5 bg-[#55B8F5] rounded-full mt-1.5 shrink-0" />
+                <span className="font-montserrat text-sm text-slate-800 font-medium tracking-wide leading-relaxed">
+                  {feat}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Bottom CTA */}
+      <div className="cta-reveal text-center space-y-6">
+        <h4 className="font-newsreader italic text-2xl md:text-3xl text-slate-800 font-light tracking-tight">
+          Give your child the advantage of structured, interactive learning.
         </h4>
 
-        <div className="flex items-center justify-center gap-6 md:gap-10">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C96A1B" strokeWidth="2" className="opacity-60 hidden md:block"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>
-          <button 
+        <div className="flex items-center justify-center gap-6">
+          <button
             onClick={() => document.getElementById('pricing-section')?.scrollIntoView({ behavior: 'smooth' })}
-            className="group relative bg-[#C96A1B] hover:bg-[#1a5c96] px-10 md:px-16 py-5 md:py-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-95 flex flex-col items-center gap-2 cursor-pointer"
+            className="group relative bg-[#142B5C] hover:bg-[#1a3568] px-10 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-95 flex items-center gap-2 cursor-pointer"
           >
-            <span className="relative z-10 font-jetbrains text-white text-xs md:text-sm font-black tracking-[0.3em] uppercase">YES, I WANT TO BE CEO OF MY LIFE</span>
+            <span className="relative z-10 font-montserrat text-white text-xs font-bold tracking-[0.2em] uppercase">
+              Enroll in {course?.title ? sanitize(course.title) : 'This Program'}
+            </span>
           </button>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C96A1B" strokeWidth="2" className="opacity-60 hidden md:block rotate-180"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>
         </div>
       </div>
-
     </section>
   )
 }

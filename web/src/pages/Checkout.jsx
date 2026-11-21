@@ -1,6 +1,6 @@
 import { getApiBase } from '../utils/apiBase.js';
 import React, { useState, useEffect, useRef } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { gsap } from 'gsap'
 import { fetchSettings, validateCoupon, clearCoupon, fetchAllCoupons } from '../redux/slices/configSlice'
@@ -370,6 +370,145 @@ const Checkout = () => {
       : course?.banner
       ? (course.banner.startsWith('http') ? course.banner : `${BASE_API}/${course.banner.replace(/^\//, '')}`)
       : null;
+
+   const hasValidCourse = Boolean(
+      (course && (course._id || course.id) && course.title && course.title !== 'Course Enrollment' && course.title !== 'Course Purchase') ||
+      (urlCourseId && isHexId(urlCourseId)) ||
+      (location.state?.course && (location.state.course._id || location.state.course.id || location.state.course.title))
+   );
+
+   if (!hasValidCourse) {
+      return (
+         <div className="min-h-screen bg-[#FAFCFF] flex flex-col justify-between relative selection:bg-accent/20">
+            {/* Top Navigation Bar with Available Site Navigation */}
+            <header className="w-full border-b border-[#E2EAF3] bg-white/90 backdrop-blur-md sticky top-0 z-40">
+               <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-18 flex items-center justify-between">
+                  <div className="flex items-center gap-6 lg:gap-8">
+                     <Link to="/" className="flex items-center gap-2.5 hover:opacity-90 transition-opacity">
+                        <img src={LOGO_PATH} alt={APP_SHORT_NAME} className="h-9 sm:h-10 w-auto object-contain" />
+                        <span className="font-newsreader italic text-xl font-light text-[#142B5C] hidden sm:inline">
+                           {APP_SHORT_NAME}
+                        </span>
+                     </Link>
+
+                     {/* Available Navigation Links */}
+                     <nav className="hidden md:flex items-center gap-5 font-montserrat text-xs font-medium text-slate-600">
+                        <Link to="/" className="hover:text-[#142B5C] transition-colors">Home</Link>
+                        <Link to="/courses" className="text-[#142B5C] font-semibold hover:text-[#1a3875] transition-colors">Courses</Link>
+                        <Link to="/forum" className="hover:text-[#142B5C] transition-colors">Forum</Link>
+                        <Link to="/gig" className="hover:text-[#142B5C] transition-colors">Gigs</Link>
+                        <Link to="/news" className="hover:text-[#142B5C] transition-colors">News</Link>
+                        <Link to="/contact" className="hover:text-[#142B5C] transition-colors">Contact</Link>
+                     </nav>
+                  </div>
+
+                  <div className="flex items-center gap-2.5 sm:gap-3">
+                     <button
+                        onClick={() => navigate(-1)}
+                        className="px-3 py-2 rounded-xl text-xs font-montserrat font-medium text-slate-600 hover:text-[#142B5C] hover:bg-slate-100 transition-colors flex items-center gap-1.5 cursor-pointer"
+                     >
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                           <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                        </svg>
+                        <span>Back</span>
+                     </button>
+                     <Link
+                        to="/courses"
+                        className="inline-flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2 rounded-xl bg-[#142B5C] hover:bg-[#1a3568] text-white text-xs font-montserrat font-semibold shadow-sm transition-all"
+                     >
+                        <span>Explore Courses</span>
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                           <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                        </svg>
+                     </Link>
+                  </div>
+               </div>
+            </header>
+
+            {/* Empty State Body */}
+            <main className="flex-1 flex items-center justify-center py-14 sm:py-20 px-4 sm:px-6">
+               <div className="max-w-2xl w-full text-center">
+                  {/* Eyebrow badge */}
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#55B8F5]/12 border border-[#55B8F5]/30 text-[#142B5C] mb-6 backdrop-blur-sm">
+                     <span className="w-2 h-2 rounded-full bg-[#FF792E] animate-pulse" />
+                     <span className="font-jetbrains text-[10px] font-bold tracking-[0.2em] uppercase text-[#142B5C]">
+                        No Course Selected
+                     </span>
+                  </div>
+
+                  {/* Clean Academic Course Icon (No shopping bag) */}
+                  <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-[#E5F2FF] to-[#F0F7FF] border border-[#CBD8E8] shadow-sm flex items-center justify-center text-[#142B5C]">
+                     <svg className="w-8 h-8 text-[#142B5C]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                     </svg>
+                  </div>
+
+                  {/* Title & Description */}
+                  <h1 className="font-newsreader italic text-3xl sm:text-4xl lg:text-5xl font-light text-[#142B5C] tracking-tight mb-4">
+                     No Course Selected
+                  </h1>
+                  <p className="font-montserrat text-sm sm:text-base text-[#475569] max-w-lg mx-auto leading-relaxed mb-8">
+                     You haven't selected any course yet. Browse our library of expert-led courses to choose a program and enroll.
+                  </p>
+
+                  {/* Action Buttons */}
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-12">
+                     <Link
+                        to="/courses"
+                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl bg-[#142B5C] hover:bg-[#1a3568] text-white font-montserrat text-sm font-semibold shadow-lg shadow-[#142B5C]/20 transition-all duration-200 active:scale-[0.98]"
+                     >
+                        <span>Browse All Courses</span>
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.25}>
+                           <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                        </svg>
+                     </Link>
+
+                     <Link
+                        to="/"
+                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl border border-[#CBD8E8] bg-white hover:border-[#55B8F5] hover:bg-[#F0F7FF] text-[#142B5C] font-montserrat text-sm font-semibold shadow-sm transition-all duration-200 active:scale-[0.98]"
+                     >
+                        <span>Back to Home</span>
+                     </Link>
+                  </div>
+
+                  {/* Available Navigation Quick Links */}
+                  <div className="border-t border-[#E2EAF3] pt-8">
+                     <p className="font-jetbrains text-[11px] font-bold text-[#64748B] uppercase tracking-[0.2em] mb-4 text-center">
+                        Available Sections
+                     </p>
+                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-left">
+                        <Link to="/courses" className="p-3.5 rounded-xl bg-white border border-[#E2EAF3] hover:border-[#55B8F5]/60 hover:shadow-sm transition-all group">
+                           <span className="font-jetbrains text-[10px] text-[#55B8F5] font-bold uppercase block mb-1">Programs</span>
+                           <h4 className="font-montserrat text-xs font-bold text-[#142B5C] group-hover:text-[#1a3875]">All Courses</h4>
+                           <p className="font-montserrat text-[11px] text-slate-500 mt-0.5">Explore curriculum</p>
+                        </Link>
+                        <Link to="/forum" className="p-3.5 rounded-xl bg-white border border-[#E2EAF3] hover:border-[#55B8F5]/60 hover:shadow-sm transition-all group">
+                           <span className="font-jetbrains text-[10px] text-[#55B8F5] font-bold uppercase block mb-1">Community</span>
+                           <h4 className="font-montserrat text-xs font-bold text-[#142B5C] group-hover:text-[#1a3875]">Forum</h4>
+                           <p className="font-montserrat text-[11px] text-slate-500 mt-0.5">Peer discussions</p>
+                        </Link>
+                        <Link to="/gig" className="p-3.5 rounded-xl bg-white border border-[#E2EAF3] hover:border-[#55B8F5]/60 hover:shadow-sm transition-all group">
+                           <span className="font-jetbrains text-[10px] text-[#55B8F5] font-bold uppercase block mb-1">Opportunities</span>
+                           <h4 className="font-montserrat text-xs font-bold text-[#142B5C] group-hover:text-[#1a3875]">Work & Gigs</h4>
+                           <p className="font-montserrat text-[11px] text-slate-500 mt-0.5">Explore posts</p>
+                        </Link>
+                        <Link to="/news" className="p-3.5 rounded-xl bg-white border border-[#E2EAF3] hover:border-[#55B8F5]/60 hover:shadow-sm transition-all group">
+                           <span className="font-jetbrains text-[10px] text-[#55B8F5] font-bold uppercase block mb-1">Updates</span>
+                           <h4 className="font-montserrat text-xs font-bold text-[#142B5C] group-hover:text-[#1a3875]">Industry News</h4>
+                           <p className="font-montserrat text-[11px] text-slate-500 mt-0.5">Latest articles</p>
+                        </Link>
+                     </div>
+                  </div>
+               </div>
+            </main>
+
+            {/* Bottom Footer */}
+            <footer className="w-full border-t border-[#E2EAF3] py-5 px-4 text-center font-jetbrains text-xs text-slate-500">
+               © {new Date().getFullYear()} {APP_SHORT_NAME}. All rights reserved. · Safe & Encrypted Connection
+            </footer>
+         </div>
+      )
+   }
 
    return (
       <div ref={checkoutRef} className="min-h-screen bg-dark flex flex-col lg:flex-row relative">

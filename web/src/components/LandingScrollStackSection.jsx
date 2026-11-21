@@ -41,46 +41,46 @@ const StackCardContent = ({ card, t, index, total }) => {
 
   return (
     <article
-      className="relative w-full max-w-7xl mx-auto overflow-hidden rounded-[2rem] border border-white/25 bg-accent ring-1 ring-white/20"
+      className="relative w-full max-w-7xl mx-auto overflow-hidden rounded-2xl sm:rounded-[2rem] border border-white/25 bg-accent ring-1 ring-white/20 shadow-[0_-4px_24px_rgba(20,43,92,0.12),0_16px_36px_rgba(20,43,92,0.18)]"
     >
       <div
         className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-white/15 blur-3xl"
         aria-hidden
       />
 
-      <div className="flex items-center justify-between gap-4 border-b border-white/20 px-6 py-4 md:px-10 md:py-5">
-        <span className="inline-flex items-center gap-2 rounded-full bg-white/20 border border-white/30 px-3.5 py-1.5 font-jetbrains text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
+      <div className="flex items-center justify-between gap-3 border-b border-white/20 px-4 py-2.5 sm:px-6 sm:py-3.5 md:px-10 md:py-5">
+        <span className="inline-flex items-center gap-2 rounded-full bg-white/20 border border-white/30 px-3 py-1 sm:px-3.5 sm:py-1.5 font-jetbrains text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
           <span className="h-1.5 w-1.5 rounded-full bg-white" aria-hidden />
           {t('stackSectionEyebrow')}
         </span>
-        <span className="font-jetbrains text-[11px] uppercase tracking-[0.12em] text-white/85">
+        <span className="font-jetbrains text-[10px] sm:text-[11px] uppercase tracking-[0.12em] text-white/85">
           {num} / {String(total).padStart(2, '0')}
         </span>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center px-6 py-8 md:px-10 md:py-10 lg:px-12 lg:py-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-12 items-center px-4 py-4 sm:px-6 sm:py-6 md:px-10 md:py-10 lg:px-12 lg:py-12">
         <div
-          className={`space-y-5 md:space-y-6 order-2 ${
+          className={`space-y-2.5 sm:space-y-4 md:space-y-6 order-2 ${
             flip ? 'lg:order-2' : 'lg:order-1'
           }`}
         >
           <p
-            className="font-newsreader text-[clamp(3.5rem,10vw,6rem)] leading-none font-light text-white/25"
+            className="font-newsreader text-3xl sm:text-5xl md:text-6xl lg:text-7xl leading-none font-light text-white/25"
             aria-hidden
           >
             {num}
           </p>
-          <h3 className="font-newsreader text-[clamp(1.75rem,3.2vw,2.5rem)] font-light leading-tight -mt-3 text-balance">
+          <h3 className="font-newsreader text-xl sm:text-2xl md:text-3xl lg:text-[clamp(1.75rem,3.2vw,2.5rem)] font-light leading-tight -mt-1 sm:-mt-2 md:-mt-3 text-balance">
             <span className="italic text-white">{t(card.titleAccentKey)}</span>{' '}
             <span className="text-[#142B5C]">{t(card.titleRestKey)}</span>
           </h3>
-          <p className="font-montserrat text-base md:text-lg text-white/90 leading-relaxed max-w-md">
+          <p className="font-montserrat text-xs sm:text-sm md:text-base lg:text-lg text-white/90 leading-relaxed max-w-md">
             {t(card.descKey)}
           </p>
         </div>
 
         <div className={`order-1 ${flip ? 'lg:order-1' : 'lg:order-2'}`}>
-          <div className="group relative aspect-[4/3] overflow-hidden rounded-2xl border-2 border-white bg-[#E5F2FF]">
+          <div className="group relative aspect-[16/10] sm:aspect-[16/9] lg:aspect-[4/3] max-h-[200px] sm:max-h-[260px] lg:max-h-none overflow-hidden rounded-xl sm:rounded-2xl border border-white/80 sm:border-2 sm:border-white bg-[#E5F2FF]">
             <img
               src={card.image}
               alt=""
@@ -97,18 +97,14 @@ const StackCardContent = ({ card, t, index, total }) => {
   )
 }
 
-const StackCard = ({ card, t, sticky, index, total }) => {
+const StackCard = ({ card, t, index, total }) => {
   const inner = <StackCardContent card={card} t={t} index={index} total={total} />
-
-  if (!sticky) {
-    return <div className="px-4 md:px-8 lg:px-12">{inner}</div>
-  }
 
   return (
     <div
-      className="sticky flex h-[min(76vh,720px)] min-h-[520px] items-start justify-center bg-transparent px-4 pt-2 md:px-8 md:pt-4 lg:px-12"
+      className="sticky flex items-start justify-center bg-transparent px-3 sm:px-6 md:px-8 lg:px-12 h-[min(82vh,680px)] min-h-[460px] sm:min-h-[500px] md:h-[min(76vh,720px)]"
       style={{
-        top: `calc(4.75rem + ${index * 14}px)`,
+        top: `calc(var(--stack-offset-base, 4.25rem) + var(--stack-step, 12px) * ${index})`,
         zIndex: index + 1,
       }}
     >
@@ -170,15 +166,10 @@ const LandingScrollStackSection = () => {
         </div>
       </div>
 
-      <div className="relative isolate hidden pb-8 md:pb-10 lg:block">
+      {/* Unified Responsive Sticky Scroll Stack for Mobile, Tablet & Desktop */}
+      <div className="relative isolate pb-12 sm:pb-16 md:pb-20 [--stack-offset-base:4.25rem] md:[--stack-offset-base:4.75rem] [--stack-step:12px] md:[--stack-step:14px]">
         {CARDS.map((card, index) => (
-          <StackCard key={card.id} card={card} index={index} total={total} t={t} sticky />
-        ))}
-      </div>
-
-      <div className="flex flex-col gap-10 px-4 pb-14 md:px-8 lg:hidden">
-        {CARDS.map((card, index) => (
-          <StackCard key={card.id} card={card} index={index} total={total} t={t} sticky={false} />
+          <StackCard key={card.id} card={card} index={index} total={total} t={t} />
         ))}
       </div>
     </section>

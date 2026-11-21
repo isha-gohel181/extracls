@@ -6,13 +6,11 @@ import { useLanguage } from '../context/LanguageContext'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const 
-BenefitsSection = ({ course, section }) => {
+const BenefitsSection = ({ course, section }) => {
   const containerRef = useRef(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 90% lighter and faster grid animation (y: 4px, scale: 0.99, duration: 0.25s, stagger: 0.02s)
       gsap.fromTo('.benefit-card',
         { opacity: 0, y: 4, scale: 0.99 },
         {
@@ -27,26 +25,31 @@ BenefitsSection = ({ course, section }) => {
     return () => ctx.revert()
   }, [])
 
+  const points = section?.points || course?.learningOutcomes || []
+  if (points.length === 0 && !section?.title) return null
+
+  const titleWords = sanitizeDisplay(section?.title || "Key Learning Milestones").split(' ')
+
   return (
-    <section ref={containerRef} className="max-w-7xl mx-auto py-20 px-4 md:px-0">
-      <div className="grid grid-cols-1 min-[1301px]:grid-cols-[1fr_1.8fr] gap-12 min-[1301px]:gap-20 items-start mb-24">
-        <div className="space-y-8 min-[1301px]:sticky min-[1301px]:top-32 transition-all duration-500">
+    <section ref={containerRef} className="max-w-7xl mx-auto py-16 px-4 md:px-0">
+      <div className="grid grid-cols-1 min-[1301px]:grid-cols-[1fr_1.8fr] gap-12 min-[1301px]:gap-20 items-start mb-16">
+        <div className="space-y-6 min-[1301px]:sticky min-[1301px]:top-32 transition-all duration-500">
           <h2 className="font-newsreader italic text-4xl md:text-5xl lg:text-6xl text-slate-900 font-extralight tracking-tight leading-[1.1]">
-            {sanitizeDisplay(section?.title || "What You Will Achieve").split(' ').map((word, i, arr) => (
+            {titleWords.map((word, i, arr) => (
               <React.Fragment key={i}>
                 {i === arr.length - 1 ? (
-                  <span className="text-[#C96A1B]">{word}</span>
+                  <span className="text-[#1a5f9e]">{word}</span>
                 ) : (
                   word + ' '
                 )}
               </React.Fragment>
             ))}
           </h2>
-          <div className="h-[2px] bg-[#C96A1B]/40 w-24" />
+          <div className="h-[2px] bg-[#55B8F5]/50 w-20" />
         </div>
 
         {section?.content && (
-          <div className="min-[1301px]:border-l border-slate-200 pl-0 min-[1301px]:pl-12 space-y-8 py-2">
+          <div className="min-[1301px]:border-l border-slate-200 pl-0 min-[1301px]:pl-12 space-y-6 py-2">
             {section.content.blocks?.map((block, i) => (
               <p key={i} className={`font-montserrat leading-[1.8] tracking-wide ${i === 0 ? 'text-lg md:text-xl text-slate-800 font-medium' : 'text-sm md:text-base text-slate-600 font-normal'}`}>
                 {sanitizeDisplay(block.data?.text || '').replace(/&nbsp;/g, ' ')}
@@ -56,21 +59,25 @@ BenefitsSection = ({ course, section }) => {
         )}
       </div>
 
-      <div className="benefit-grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {section?.points?.map((feat, i) => (
-          <div key={i} className="benefit-card border border-slate-200/80 bg-white p-6 md:p-8 rounded-2xl shadow-sm hover:shadow-md hover:border-[#C96A1B]/50 relative group transition-all duration-300 h-full flex flex-col justify-start min-h-[140px]">
-            <div className="absolute top-3 right-4 select-none pointer-events-none">
-              <span className="font-jetbrains text-3xl md:text-4xl font-black text-[#C96A1B]/20 group-hover:text-[#C96A1B]/40 transition-colors">{String(i + 1).padStart(2, '0')}</span>
+      {points.length > 0 && (
+        <div className="benefit-grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {points.map((feat, i) => (
+            <div key={i} className="benefit-card border border-slate-200/80 bg-white p-6 md:p-7 rounded-2xl shadow-sm hover:shadow-md hover:border-[#55B8F5]/50 relative group transition-all duration-300 h-full flex flex-col justify-start min-h-[130px]">
+              <div className="absolute top-3 right-4 select-none pointer-events-none">
+                <span className="font-jetbrains text-3xl font-black text-[#55B8F5]/20 group-hover:text-[#55B8F5]/40 transition-colors">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+              </div>
+              <div className="flex items-start gap-3.5 pr-8 relative z-10">
+                <div className="w-2.5 h-2.5 bg-[#55B8F5] rounded-full mt-1.5 shrink-0" />
+                <span className="font-montserrat text-sm md:text-[15px] text-slate-800 font-medium tracking-wide leading-relaxed">
+                  {sanitizeDisplay(feat)}
+                </span>
+              </div>
             </div>
-            <div className="flex items-start gap-4 pr-8 relative z-10">
-              <div className="w-2.5 h-2.5 bg-[#C96A1B] rounded-full mt-1.5 shrink-0 shadow-[0_0_8px_rgba(24, 120, 192,0.35)]" />
-              <span className="font-montserrat text-sm md:text-[15px] text-slate-800 font-semibold tracking-wide leading-relaxed">
-                {feat}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </section>
   )
 }

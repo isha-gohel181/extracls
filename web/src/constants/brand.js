@@ -7,6 +7,7 @@ export const CERTIFICATE_ORGANIZATION_DEFAULT = 'EXTRACLS';
 /** Default site logo (footer, auth, dashboard, etc.). Navbar uses NAV_LOGO_PATH only. */
 export const LOGO_PATH = '/Extra_cls/logo/logo.png';
 export const LOGO_COMPACT_PATH = '/Extra_cls/logo/logo.png';
+export const LOGO_WIDE_PATH = '/Extra_cls/logo/logo_wide@2x.png';
 export const NAV_LOGO_PATH = '/Extra_cls/logo/nav_logo.jpeg';
 export const MENTOR_IMAGE_PATH = '/Extra_cls/landing/training-guidance.jpg';
 /** Default course certificate artwork (full design — overlays add name, course, date, serial) */

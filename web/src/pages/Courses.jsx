@@ -42,8 +42,9 @@ const Courses = () => {
     } else {
       // Fallback if API hasn't loaded yet
       list.push(
-        { id: 'GS COURSES', labelKey: 'gsCoursesTab', defaultLabel: 'GS COURSES' },
-        { id: 'OPTIONAL COURSES', labelKey: 'optionalCoursesTab', defaultLabel: 'OPTIONAL COURSES' }
+        { id: 'PHONICS & READING', labelKey: '', defaultLabel: 'PHONICS & READING' },
+        { id: 'MATH & LOGIC', labelKey: '', defaultLabel: 'MATH & LOGIC' },
+        { id: 'SCIENCE & STEM', labelKey: '', defaultLabel: 'SCIENCE & STEM' }
       )
     }
 
@@ -841,7 +842,7 @@ const Courses = () => {
 
         {/* VIEW C: COURSES GRID (All Courses, GS Courses, Optional Courses) */}
         {activeFilter !== 'TEST SERIES' && activeFilter !== 'BUY BOOKS' && (
-          <div className="course-grid max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-24 mb-12">
+          <div className="course-grid max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
             {loading ? (
               <div className="col-span-full text-center py-20 text-accent font-montserrat">LOADING COURSES...</div>
             ) : error ? (
@@ -882,12 +883,12 @@ const Courses = () => {
               <p className="font-montserrat text-[11px] text-description uppercase tracking-[0.2em]">Curated experiences & intensive workshops.</p>
             </div>
             <div className="flex items-center gap-4 text-[10px] font-jetbrains text-description">
-              <span className="text-accent">•</span> <span>{t('berlin') || 'BERLIN'}</span>
-              <span className="text-accent">•</span> <span>{t('remotelyAvailable') || 'REMOTELY AVAILABLE'}</span>
+              <span className="text-accent">•</span> <span>ONLINE INTERACTIVE</span>
+              <span className="text-accent">•</span> <span>GLOBAL COHORTS</span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {eventsLoading ? (
               <div className="col-span-full text-center py-20 text-accent font-montserrat">LOADING EVENTS...</div>
             ) : eventList && eventList.length > 0 ? (

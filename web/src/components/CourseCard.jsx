@@ -18,67 +18,70 @@ const CourseCard = ({ item, className = '', variant = 'course', onRegister }) =>
   }
 
   const CardContent = (
-    <div className={`catalog-card flex flex-col h-full group ${className}`}>
+    <div className={`catalog-card flex flex-col h-full rounded-3xl border border-[#E2EAF3] bg-white p-3 sm:p-3.5 shadow-sm hover:shadow-xl hover:border-[#55B8F5]/50 transition-all duration-300 hover:-translate-y-1 overflow-hidden group ${className}`}>
       {/* Image Wrapper */}
-      <div className="relative overflow-hidden mb-8 aspect-square bg-[#FFF9F3] border border-[#682701]/10 rounded-none">
+      <div className="relative aspect-[16/10] rounded-2xl overflow-hidden bg-[#E5F2FF] mb-4">
         {item.image ? (
           <img
             src={item.image}
             alt={sanitizeDisplay(item.title)}
-            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+            decoding="async"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center px-4">
-            <span className="font-jetbrains text-[9px] uppercase tracking-[0.2em] text-[#682701]/40 text-center">
+            <span className="font-jetbrains text-[9px] uppercase tracking-[0.2em] text-[#142B5C]/40 text-center">
               {t('noPreview') || 'No preview'}
             </span>
-          </div>
-        )}
-        {item.isNew && (
-          <div className="absolute top-4 right-4 bg-accent/90 text-white px-2 py-0.5 font-jetbrains text-[8px] font-bold tracking-tighter z-30">
-            {t('newBadge') || 'NEW'}
           </div>
         )}
       </div>
 
       {/* Content Metadata */}
-      <div className="flex flex-col flex-grow gap-2.5 px-1">
-        <span className="font-jetbrains text-[8px] md:text-[9px] text-accent tracking-[0.25em] font-bold uppercase pointer-events-none">
-          {item.category}
-        </span>
+      <div className="flex flex-col flex-grow gap-2 px-1 pb-1">
+        {item.category && (
+          <span className="font-jetbrains text-[9px] text-[#1a5f9e] tracking-[0.2em] font-bold uppercase pointer-events-none truncate">
+            {item.category}
+          </span>
+        )}
         
-        <h3 className="font-newsreader text-2xl md:text-[28px] text-normal font-extralight tracking-tight leading-tight pointer-events-none">
+        <h3 className="font-newsreader text-xl sm:text-[22px] text-[#142B5C] font-normal tracking-tight leading-snug group-hover:text-[#1a5f9e] transition-colors pointer-events-none line-clamp-2">
           {sanitizeDisplay(item.title)}
         </h3>
         
-        <p className="font-montserrat text-[13px] text-description leading-relaxed max-w-[90%] mb-4 flex-grow line-clamp-2 pointer-events-none">
-          {item.description}
-        </p>
+        {item.description ? (
+          <p className="font-montserrat text-xs sm:text-[13px] text-[#475569] leading-relaxed mb-3 flex-grow line-clamp-2 pointer-events-none">
+            {item.description}
+          </p>
+        ) : null}
 
         {/* Card Footer */}
-        <div className="flex items-center justify-between pt-6 border-t border-border mt-auto">
+        <div className="flex items-center justify-between pt-3.5 border-t border-[#E2EAF3] mt-auto">
           {variant === 'course' ? (
             <>
               <div className="flex items-baseline gap-2">
-                <span className="font-montserrat text-[13px] text-normal tracking-widest font-bold">
+                <span className="font-montserrat text-sm sm:text-base text-[#142B5C] font-bold">
                   {item.price}
                 </span>
                 {item.originalPrice && (
-                  <span className="font-montserrat text-[11px] text-description/60 line-through tracking-wider">
+                  <span className="font-montserrat text-xs text-[#94A3B8] line-through">
                     {item.originalPrice}
                   </span>
                 )}
               </div>
-              <div className="w-5 h-5 flex items-center justify-center border border-accent/30 rounded-full group-hover:bg-accent group-hover:border-accent transition-all duration-500 overflow-hidden">
+              <div className="w-7 h-7 flex items-center justify-center rounded-full bg-[#F0F7FF] text-[#142B5C] group-hover:bg-[#142B5C] group-hover:text-white transition-all duration-300">
                 <svg 
-                  width="10" 
-                  height="10" 
+                  width="11" 
+                  height="11" 
                   viewBox="0 0 24 24" 
                   fill="none" 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  className="transition-all duration-500 group-hover:stroke-white stroke-accent"
+                  stroke="currentColor"
+                  strokeWidth="2.5" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
                 >
-                  <path d="M7 17L17 7M17 7H7M17 7V17" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  <path d="M7 17L17 7M17 7H7M17 7V17" />
                 </svg>
               </div>
             </>
@@ -86,7 +89,7 @@ const CourseCard = ({ item, className = '', variant = 'course', onRegister }) =>
             <button 
               type="button"
               onClick={handleAction}
-              className="w-full py-3 bg-accent text-white font-montserrat text-[11px] font-bold tracking-[0.2em] uppercase hover:scale-[1.02] active:scale-98 shadow-sm transition-all duration-300 cursor-pointer text-center"
+              className="w-full py-2.5 px-4 rounded-xl bg-accent text-white font-montserrat text-xs font-bold tracking-[0.1em] uppercase hover:bg-[#3aa8ee] shadow-xs transition-all duration-200 cursor-pointer text-center"
             >
               {item.buttonText || t('registerNow') || 'REGISTER NOW'}
             </button>
@@ -116,4 +119,3 @@ const CourseCard = ({ item, className = '', variant = 'course', onRegister }) =>
 }
 
 export default CourseCard
-

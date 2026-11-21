@@ -125,13 +125,13 @@ const Forum = () => {
       replies: mapReplies(thread.replies)
   }))
 
-  const tags = ['#Mindset', '#Feedback', '#Paid Ads', '#SEO', '#Client Acquisition', '#Operations']
+  const tags = ['#Phonics', '#EarlyReading', '#MathFoundations', '#HomeScience', '#Storycraft', '#KidsCoding', '#ParentingTips']
   const stats = [
     { label: t('totalTopicsLabel'), value: formatStat(forumStats?.totalTopics ?? total ?? 0) },
     { label: t('activeUsersLabel'), value: formatStat(forumStats?.activeParticipants ?? 0) },
     { label: t('thisWeekLabel'), value: formatStat(forumStats?.topicsThisWeek ?? 0) },
   ]
-  const discourseTags = ['#TYPOGRAPHY', '#EDITORIAL', '#GRIDSYSTEMS', '#UXDESIGN', '#ASYMMETRY']
+  const discourseTags = ['#LITERACY', '#STEM', '#NUMERACY', '#CREATIVITY', '#MINDFULLEARNING']
 
 const QuestionCard = ({ question }) => {
     const { t } = useLanguage()

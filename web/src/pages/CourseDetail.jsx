@@ -229,7 +229,7 @@ const CourseDetail = () => {
           <div className="flex flex-col gap-6">
             <div className="mb-4 text-center md:text-left">
               <h2 className="font-newsreader italic text-4xl md:text-6xl text-normal font-extralight mb-4 tracking-tighter">
-                The <span className="text-accent">Blueprint</span>
+                Course <span className="text-accent">Curriculum</span>
               </h2>
               <div className="h-[1px] bg-accent/20 w-32 md:w-48 mx-auto md:mx-0" />
             </div>
@@ -250,7 +250,7 @@ const CourseDetail = () => {
                     >
                       <div className={`${isExpanded ? 'space-y-4' : 'space-y-2'}`}>
                         <div className="flex items-center gap-6">
-                          <span className="font-jetbrains text-accent font-black tracking-[0.4em] uppercase text-[10px]">Chapter {String(mIndex + 1).padStart(2, '0')}</span>
+                          <span className="font-jetbrains text-accent font-black tracking-[0.4em] uppercase text-[10px]">Module {String(mIndex + 1).padStart(2, '0')}</span>
                           <div className="h-[1px] flex-1 bg-white/10" />
                           <button className="w-8 h-8 rounded-xl border border-white/10 flex items-center justify-center group-hover/header:border-accent transition-colors bg-dark/50">
                             <svg 
@@ -312,7 +312,7 @@ const CourseDetail = () => {
                                   <img 
                                     src={displayImage} 
                                     alt={lesson.title} 
-                                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" 
+                                    className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105" 
                                   />
                                 </div>
                               )}
@@ -330,7 +330,7 @@ const CourseDetail = () => {
       )}
 
       {/* Global Static/Common Sections */}
-      <BonusSection course={course} />
+      {course?.bonuses?.length > 0 && <BonusSection course={course} />}
       {(course?.faqs?.length > 0 || course?.faq?.length > 0) && (
         <FAQSection course={course} />
       )}
