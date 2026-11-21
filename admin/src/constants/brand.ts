@@ -6,7 +6,7 @@ export const CERTIFICATE_ORGANIZATION_DEFAULT = "EXTRACLS";
 /** Default admin/site logo (sidebar, auth). Web navbar uses NAV_LOGO_PATH in web brand.js only. */
 export const LOGO_PATH = "/Extra_cls/logo/logo.png";
 export const LOGO_COMPACT_PATH = "/Extra_cls/logo/logo.png";
-export const CERTIFICATE_DEFAULT_IMAGE = "/Extra_cls/logo/logo.png";
+export const CERTIFICATE_DEFAULT_IMAGE = "/Extra_cls/certificate/certificate_default.png";
 
 /**
  * Landing / web theme (web/src/index.css + Footer.jsx):

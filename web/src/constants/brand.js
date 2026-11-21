@@ -11,7 +11,7 @@ export const LOGO_WIDE_PATH = '/Extra_cls/logo/logo_wide@2x.png';
 export const NAV_LOGO_PATH = '/Extra_cls/logo/nav_logo.jpeg';
 export const MENTOR_IMAGE_PATH = '/Extra_cls/landing/training-guidance.jpg';
 /** Default course certificate artwork (full design — overlays add name, course, date, serial) */
-export const CERTIFICATE_DEFAULT_IMAGE = '/Extra_cls/logo/logo.png';
+export const CERTIFICATE_DEFAULT_IMAGE = '/Extra_cls/certificate/certificate_default.png';
 
 export const PLAY_STORE_URL = (import.meta.env.VITE_PLAY_STORE_URL || '').trim();
 export const APP_STORE_URL = (import.meta.env.VITE_APP_STORE_URL || '').trim();
